@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../include/head' ); -%>
+  <body>
+    <div class="main-wrapper">
+      <%- include('../include/pageheader' ); -%> <%-
+      include('../include/student_sidebar' ); -%>
+      <!-- LEFT SIDE BAR MENU END-->
+
+      <div class="page-wrapper">
+        <div class="content container-fluid">
+          <div class="page-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="page-title">Exam Results</h3>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <% if (exam_results && exam_results.length > 0) { %> <%
+              exam_results.forEach(sessionData => { %>
+
+              <div class="card card-table">
+                <div class="card-header">
+                  <h2><%= sessionData.session %></h2>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered table-input">
+                      <thead>
+                        <tr>
+                          <th scope="col">Module Name</th>
+                          <th scope="col">Final Grade</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% sessionData.exam_results.forEach(result => { %>
+                        <tr>
+                          <td><%= result.course_name %></td>
+                          <td><%= result.grade %></td>
+                        </tr>
+                        <% }); %>
+                      </tbody>
+                    </table>
+                    <% }); %> <% } else { %>
+                    <tr>
+                      <td colspan="3">No exam Results available</td>
+                    </tr>
+                    <% } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%- include('../include/footer' ); -%>
+      </div>
+    </div>
+    <%- include('../include/scripts' ); -%>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../include/head' ); -%>
+  <body>
+    <div class="main-wrapper">
+      <%- include('../include/pageheader'); -%> <%-
+      include('../include/lecturer_sidebar' ); -%>
+      <!-- LEFT SIDE BAR MENU END-->
+
+      <div class="page-wrapper">
+        <div class="content container-fluid">
+          <div class="page-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="page-title">Modules</h3>
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="index.html">Modules</a>
+                  </li>
+                  <li class="breadcrumb-item active">Assigned Modules</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card card-table">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered table-input">
+                      <thead>
+                        <tr>
+                          <th scope="col">ID</th>
+                          <th scope="col">Module</th>
+                          <th scope="col">Program</th>
+                          <th scope="col"># of students</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% classes.forEach(function(module) { %>
+                        <tr>
+                          <td><%= module.course_id %></td>
+                          <td><%= module.course_name %></td>
+                          <td><%= module.program_id %></td>
+                          <td><%= module.num_students %></td>
+                        
+                          <td>
+                            <a href="students_list?id=<%= module.course_id %>" class="btn btn-primary"
+                              >View Class</a
+                            >
+                          </td>
+                        </tr>
+                        <% }); %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%- include('../include/footer' ); -%>
+      </div>
+    </div>
+    <%- include('../include/scripts' ); -%>
+  </body>
+</html>

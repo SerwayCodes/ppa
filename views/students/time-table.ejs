@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../include/head' ); -%>
+  <body>
+    <div class="main-wrapper">
+      <%- include('../include/pageheader' ); -%> <%- include('../include/student_sidebar' ); -%>
+
+      <div class="page-wrapper">
+        <div class="content container-fluid">
+          <div class="page-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="page-title">Time Table</h3>
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="index.html">Dashboard</a>
+                  </li>
+                  <li class="breadcrumb-item active">Time Table</li>
+                </ul>
+              </div>
+              <div class="col-auto text-right float-right ml-auto">
+                <a href="#" class="btn btn-outline-primary mr-2"><i class="fas fa-download"></i> Download</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card card-table">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover table-center mb-0">
+                      <thead>
+                        <tr>
+                          <th>Module Code</th>
+
+                          <th>Subject</th>
+                          <th>Start Time</th>
+                          <th>End Time</th>
+                          <th>Date</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>CG2309</td>
+
+                          <td>Working in engineering</td>
+                          <td>10:00 AM</td>
+                          <td>01:00 PM</td>
+                          <td>23 Apr 2020</td>
+                        </tr>
+                        <tr>
+                          <td>CG2209</td>
+
+                          <td>Principles of engineering technology</td>
+                          <td>10:00 AM</td>
+                          <td>01:00 PM</td>
+                          <td>23 Apr 2020</td>
+                        </tr>
+                        <tr>
+                          <td>CG2213</td>
+
+                          <td>Wiring and testing electrical circuits</td>
+                          <td>01:00 PM</td>
+                          <td>04:00 PM</td>
+                          <td>26 Nov 2020</td>
+                        </tr>
+                        <tr>
+                          <td>CG2143</td>
+
+                          <td>Engineering principles</td>
+                          <td>01:00 PM</td>
+                          <td>04:00 PM</td>
+                          <td>18 Sep 2020</td>
+                        </tr>
+                        <tr>
+                          <td>CG2009</td>
+
+                          <td>Project management</td>
+                          <td>01:00 PM</td>
+                          <td>04:00 PM</td>
+                          <td>23 Jul 2020</td>
+                        </tr>
+                        <tr>
+                          <td>CG2431</td>
+
+                          <td>Digital design</td>
+                          <td>10:00 AM</td>
+                          <td>01:00 PM</td>
+                          <td>15 Oct 2020</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <%- include('../include/footer' ); -%>
+      </div>
+    </div>
+    <%- include('../include/scripts' ); -%>
+  </body>
+</html>

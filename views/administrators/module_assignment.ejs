@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../include/head' ); -%>
+
+  <body>
+    <div class="main-wrapper">
+      <%- include('../include/pageheader' ); -%> <%-
+      include('../include/admin_sidebar' ); -%>
+      <div class="page-wrapper">
+        <div class="content container-fluid">
+          <div class="page-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="page-title">Lecturers</h3>
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="index">Lecturers</a></li>
+                  <li class="breadcrumb-item active"></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <% if(messages.success) { %>
+            <div class="alert alert-success"><%= messages.success %></div>
+            <% } %> <% if(messages.error) { %>
+            <div class="alert alert-danger"><%= messages.error %></div>
+            <% } %>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card p-3">
+                <form action="assign_module" method="post">
+                  <div class="col-lg-6 mb-3">
+                    <label for="selectedClass"><h4>Select Program:</h4></label>
+                    <select
+                      id="selectedClass"
+                      name="selectedClass"
+                      class="form-select"
+                      required
+                    >
+                      <option value="">Select Class</option>
+                      <option value="E1">E1</option>
+                      <option value="E2">E2</option>
+                      <option value="E3">E3</option>
+                      <option value="E4">E4</option>
+                      <option value="E4M">E4M</option>
+                    </select>
+                  </div>
+                  <div class="col-lg-6 mb-3">
+                    <label for="selectedModule"><h4>Select Module:</h4></label>
+                    <select
+                      id="selectedModule"
+                      name="selectedModule"
+                      class="form-control"
+                      required
+                    >
+                      <option value="">Select Module</option>
+                    </select>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <label for="selectedModule"><h4>Select Lecturer:</h4></label> <br>
+                    <select class="form-control" name="lecturer_id" required>
+                      <option value="">--Select a Lecturer--</option>
+                      <% lecturers.forEach(function(lecturer) { %>
+                      <option value="<%=lecturer.lecturer_id%>">
+                        <%= lecturer.first_name %> <%= lecturer.last_name %>
+                      </option>
+                      <% }); %>
+                    </select>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%- include('../include/footer' ); -%>
+      </div>
+    </div>
+    <%- include('../include/scripts' ); -%>
+    <script>
+      $(document).ready(function () {
+        $("#selectedClass").change(function () {
+          var selectedClass = $(this).val();
+          $.ajax({
+            url: "fetch_modules", // Assuming this endpoint is on the same server
+            type: "GET",
+            data: { class: selectedClass },
+            success: function (response) {
+              var modulesSelect = $("#selectedModule");
+              modulesSelect.empty();
+              modulesSelect.append('<option value="">Select Module</option>');
+              response.modules.forEach(function (module) {
+                modulesSelect.append(
+                  '<option value="' +
+                    module.course_id +
+                    '">' +
+                    module.course_name +
+                    "</option>"
+                );
+              });
+            },
+            error: function (error) {
+              console.log(error);
+            },
+          });
+        });
+
+        $("#moduleForm").submit(function (event) {
+          event.preventDefault();
+          var selectedClass = $("#selectedClass").val();
+          var selectedModule = $("#selectedModule").val();
+          // Handle the selected class and module here (e.g., send to the server for further processing)
+          console.log("Selected Class:", selectedClass);
+          console.log("Selected Module:", selectedModule);
+        });
+      });
+    </script>
+  </body>
+</html>

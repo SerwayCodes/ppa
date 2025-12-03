@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../include/head' ); -%>
+
+  <body>
+    <div class="main-wrapper">
+      <%- include('../include/pageheader' ); -%> <%-
+      include('../include/admin_sidebar' ); -%>
+      <div class="page-wrapper">
+        <div class="content container-fluid">
+          <div class="page-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="page-title">Student</h3>
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="index">Class</a>
+                  </li>
+                  <li class="breadcrumb-item active">Add Results</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="text-danger" id="error-message"></div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title">
+                    Exam Results for Candidate with Student ID <%=studentId %>
+                  </h5>
+                </div>
+
+                <div class="card-body">
+                  <form id="gradeForm">
+                    <table class="table table-bordered table-input2">
+                      <thead>
+                        <tr>
+                          <th>Module ID#</th>
+                          <th scope="col">Module Name</th>
+
+                          <th scope="col">Add results</th>
+                        </tr>
+                      </thead>
+
+                      <div style="display: none">
+                        <input
+                          type="text"
+                          name="<%=studentId %>"
+                          id="studentId"
+                          value="<%=studentId %>"
+                          readonly
+                        />
+                      </div>
+
+                      <div style="display: none">
+                        <input
+                          type="text"
+                          name="<%=programId %>"
+                          id="programId"
+                          value="<%=programId %>"
+                          readonly
+                        />
+                      </div>
+
+                      <div
+                        class="modal fade"
+                        id="successModal"
+                        tabindex="-1"
+                        aria-labelledby="exampleModalLabel"
+                        aria-hidden="true"
+                      >
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">
+                                Modal title
+                              </h5>
+                              <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                              ></button>
+                            </div>
+                            <div class="modal-body">...</div>
+                            <div class="modal-footer">
+                              <button
+                                type="button"
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal"
+                              >
+                                Close
+                              </button>
+                              <button type="button" class="btn btn-primary">
+                                Save changes
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <tbody>
+                        <% if (data && data.modules && data.modules.length > 0)
+                        { %> <% data.modules.forEach(function(module) { %>
+                        <tr>
+                          <td><%= module.course_id %></td>
+                          <td><%= module.course_name %></td>
+                          <td>
+                            <select name="grade" id="">
+                              <option value="FAIL">FAIL</option>
+                              <option value="PASS">PASS</option>
+                              <option value="MERIT">MERIT</option>
+                              <option value="DISTINCTION">DISTINCTION</option>
+                            </select>
+                          </td>
+                        </tr>
+                        <% }); %> <% } else { %>
+                        <tr>
+                          <td colspan="3">No modules available</td>
+                        </tr>
+                        <% } %>
+                      </tbody>
+                    </table>
+                    <button class="btn btn-primary m-1" type="submit">
+                      Submit Grades
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%- include('../include/footer' ); -%>
+      </div>
+    </div>
+    <%- include('../include/scripts' ); -%>
+
+   <!-- <script>
+    document.getElementById("gradeForm").addEventListener("submit", function (event) {
+  event.preventDefault(); // Prevent default form submission
+
+  const studentId = document.getElementById("studentId").value;
+  const programId = document.getElementById("programId").value;
+  const grades = [];
+
+  // Iterate through rows and extract selected grades
+  const rows = document.querySelectorAll("tbody tr");
+  rows.forEach((row) => {
+    const course_id = row.querySelector("td:nth-child(1)").textContent;
+    const course_name = row.querySelector("td:nth-child(2)").textContent;
+    const grade = row.querySelector("select").value;
+
+    grades.push({ course_id, course_name, grade });
+  });
+
+  // Send student ID and grades data to the server using fetch API
+  fetch("submitGrades", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ programId, studentId, grades }),
+  })
+  .then(response => response.json()) // Assuming the server responds with JSON data
+       .then(data => {
+         // Redirect to another page and pass the data as a query parameter
+         window.location.href = `students_class?programId=${programId}&data=${encodeURIComponent(JSON.stringify(data))}`;
+       })
+       .catch(error => {
+         console.error('Error:', error);
+       }
+  
+  );
+
+
+});
+
+   </script> -->
+  
+  
+  <script>document.getElementById("gradeForm").addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent default form submission
+  
+    const studentId = document.getElementById("studentId").value;
+    const programId = document.getElementById("programId").value;
+    const grades = [];
+  
+    // Iterate through rows and extract selected grades
+    const rows = document.querySelectorAll("tbody tr");
+    rows.forEach((row) => {
+      const course_id = row.querySelector("td:nth-child(1)").textContent;
+      const course_name = row.querySelector("td:nth-child(2)").textContent;
+      const grade = row.querySelector("select").value;
+  
+      grades.push({ course_id, course_name, grade });
+    });
+  
+    // Send student ID and grades data to the server using fetch API
+    fetch("submitGrades", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ programId, studentId, grades }),
+    })
+    .then(response => {
+      if (response.ok) {
+        // If the response is OK, redirect to the next page
+        return response.json().then(data => {
+          window.location.href = `students_class?programId=${programId}&data=${encodeURIComponent(JSON.stringify(data))}`;
+        });
+      } else {
+        // If there's an error response, handle the error and display the message
+        return response.json().then(errorData => {
+          const errorMessage = errorData.error || "An error occurred while processing your request.";
+          // Display the error message to the user (e.g., in a div with id="error-message")
+          document.getElementById("error-message").textContent = errorMessage;
+          throw new Error(errorMessage);
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  });
+  </script>
+  </body>
+</html>

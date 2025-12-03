@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../include/head' ); -%>
+  <body>
+    <div class="main-wrapper">
+      <%- include('../include/pageheader' ); -%> <%-
+      include('../include/admin_sidebar' ); -%>
+      <div class="page-wrapper">
+        <div class="content container-fluid">
+          <div class="page-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="page-title">add calendar events</h3>
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="">Events</a></li>
+                  <li class="breadcrumb-item active">Add Events</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <% if(messages.success) { %>
+          <div class="alert alert-success"><%= messages.success %></div>
+          <% } %> <% if(messages.error) { %>
+          <div class="alert alert-danger"><%= messages.error %></div>
+          <% } %>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card">
+                <div class="card-body">
+                  <form action="addEvent" method="post"  onsubmit="return validateDates()">
+                    <div class="row">
+                      <div class="col-12">
+                        <h5 class="form-title">
+                          <span>Event Information</span>
+                        </h5>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Name Of Event</label>
+                          <input
+                            type="text"
+                            name="event_name"
+                            class="form-control"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Start Date</label>
+                          <input
+                            type="date"
+                            name="start_date"
+                            id="startDate"
+                            class="form-control"
+                          required
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Start Date</label>
+                          <input
+                            type="date"
+                            name="end_date"
+                            id="endDate"
+                            class="form-control"
+                           required
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <button type="submit" class="btn btn-primary">
+                          Submit
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                  <div
+                    class="modal fade"
+                    id="errorModal"
+                    tabindex="-1"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">
+                            Error
+                          </h5>
+                          <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          ></button>
+                        </div>
+                        <div class="modal-body">
+                          <p class="text-danger">
+                            Start date cannot be in the past or end date must be
+                            after the start date.
+                          </p>
+                        </div>
+                        <div class="modal-footer">
+                          <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                          >
+                            Close
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%- include('../include/footer' ); -%>
+      </div>
+    </div>
+
+    <%- include('../include/scripts'); -%>
+  </body>
+</html>

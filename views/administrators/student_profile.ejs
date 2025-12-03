@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../include/head' ); -%>
+  <body>
+    <div class="main-wrapper">
+      <%- include('../include/pageheader' ); -%> <%-
+      include('../include/admin_sidebar' ); -%>
+      <div class="page-wrapper">
+        <div class="content">
+          <div class="page-header card-header">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3 class="page-title">Student Profile</h3>
+              </div>
+            </div>
+          </div>
+          <div class="tab-content" id="nav-tabContent">
+            <div
+              class="tab-pane fade show active"
+              id="nav-home"
+              role="tabpanel"
+              aria-labelledby="nav-home-tab"
+            >
+              <div class="card-body">
+                <div class="col-lg-12 m-2 text-center">
+                  <div class="col-auto profile-image">
+                    <a href="#">
+                      <img
+                        class="rounded-circle"
+                        alt="User Image"
+                        src="/assets/img/placeholder.jpe"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div class="row justify-content-center">
+                  <div class="col-lg-12 p-0 ml-1">
+                    <div class="card card-table">
+                      <div class="card-header">
+                        <h4 class="card-title">STUDENT</h4>
+                      </div>
+
+                      <div class="table-responsive">
+                        <table class="table table-center table-bordered">
+                          <tbody>
+                            <tr>
+                              <td>Full Name</td>
+
+                              <td>
+                                <%= data. studentdetails[0].first_name%> <%=
+                                data.studentdetails[0].last_name %>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Stream</td>
+
+                              <td>Electrical</td>
+                            </tr>
+                            <tr>
+                              <td>mobile</td>
+
+                              <td>
+                                <%=data. studentdetails[0].phone_number %>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Email</td>
+
+                              <td><%=data. studentdetails[0].email %></td>
+                            </tr>
+                            <tr>
+                              <td>Date of Birth</td>
+
+                              <td>
+                                <%=data. studentdetails[0].date_of_birth %>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Program</td>
+
+                              <td>
+                                <%=data. studentdetails[0].allocated_program %>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Gender</td>
+
+                              <td><%=data. studentdetails[0].gender %></td>
+                            </tr>
+                            <tr>
+                              <td>Nationality</td>
+
+                              <td>
+                                <%= data. studentdetails[0].nationality %>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Home District</td>
+
+                              <td><%=data. studentdetails[0].district %></td>
+                            </tr>
+
+                            <tr>
+                              <td>Tradition Authority</td>
+
+                              <td><%=data. studentdetails[0].tradi_auth %></td>
+                            </tr>
+                            <tr>
+                              <td>Village</td>
+
+                              <td><%=data. studentdetails[0].village %></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12 p-0 ml-1">
+                    <div class="card card-table">
+                      <div class="card-header">
+                        <h4 class="card-title">NEXT OF KIN</h4>
+                      </div>
+
+                      <div class="table-responsive">
+                        <table class="table table-center table-bordered">
+                          <tbody>
+                            <tr>
+                              <td>Full Name</td>
+
+                              <td>
+                                <%= data. studentdetails[0].next_of_kin_name %>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Relationship</td>
+
+                              <td>
+                                <%=data.
+                                studentdetails[0].next_of_kin_relationship %>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>mobile</td>
+
+                              <td>
+                                <%= data.
+                                studentdetails[0].next_of_kin_phone_number %>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Email</td>
+
+                              <td>
+                                <%= data. studentdetails[0].next_of_kin_email %>
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td>Address</td>
+
+                              <td>
+                                <%=data. studentdetails[0].next_of_kin_address
+                                %>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12 p-0 ml-1">
+                    <% if (data.exam_results && data.exam_results.length > 0) {
+                    %> <% data.exam_results.forEach(function(sessionData) { %>
+                    <div class="card card-table">
+                      <div class="card-header">
+                        <h2><%= sessionData.session %></h2>
+                      </div>
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <table class="table table-bordered table-input">
+                            <thead>
+                              <tr>
+                                <th scope="col">Module Name</th>
+                                <th scope="col">Final Grade</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <%
+                              sessionData.exam_results.forEach(function(result)
+                              { %>
+                              <tr>
+                                <td><%= result.course_name %></td>
+                                <td><%= result.grade %></td>
+                              </tr>
+                              <% }); %>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                    <% }); %> <% } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <%- include('../include/footer' ); -%>
+      </div>
+    </div>
+
+    <%- include('../include/scripts' ); -%>
+  </body>
+</html>

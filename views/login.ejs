@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <link rel="shortcut icon" href="/assets/img/favicon.png" />
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  />
+
+  <link rel="stylesheet" href="/assets/css/login.css" />
+
+  <body>
+    <div class="wrapper">
+      <header>Login Form</header>
+      <ul>
+        <% if (typeof errors != 'undefined') { %> <% errors.forEach(error => {
+        %>
+        <li><%= error.message %></li>
+        <% }) %> <% } %>
+      </ul>
+
+      <ul style="list-style-type: none">
+        <% if(messages.success_msg) { %>
+        <li style="color: rgb(17, 226, 86)"><%= messages.success_msg %></li>
+        <% } %>
+      </ul>
+
+      <ul style="list-style-type: none">
+        <% if (messages.error) { %>
+        <li style="color: red"><%= messages.error %></li>
+        <% } %>
+      </ul>
+
+      <form action="login" method="POST">
+        <!-- Note the action attribute pointing to login.php -->
+        <div class="field email">
+          <div class="input-area">
+            <input type="text" placeholder="Email Address" name="email" />
+            <!-- Add name="email" attribute -->
+            <i class="icon fas fa-envelope"></i>
+            <i class="error error-icon fas fa-exclamation-circle"></i>
+          </div>
+          <div class="error error-txt">Email can't be blank</div>
+        </div>
+        <div class="field password">
+          <div class="input-area">
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              id="password"
+            />
+            <!-- Add name="password" attribute -->
+            <i class="icon fas fa-lock"></i>
+            <i class="error error-icon fas fa-exclamation-circle"></i>
+          </div>
+          <div class="error error-txt">Password can't be blank</div>
+          <div class="showPassword">
+            <input
+              type="checkbox"
+              id="showPassword"
+              onclick="showHidePassword()"
+            />
+            <label for="showPassword" class="show-password-label">
+              Show Password</label
+            >
+          </div>
+        </div>
+        <div class="pass-txt">
+          <a href="forgot-password">Forgot password?</a>
+        </div>
+        <input type="submit" value="Login" />
+      </form>
+    </div>
+
+    <script>
+      function showHidePassword() {
+        const passwordField = document.getElementById("password");
+        if (passwordField.type === "password") {
+          passwordField.type = "text";
+        } else {
+          passwordField.type = "password";
+        }
+      }
+    </script>
+  </body>
+</html>

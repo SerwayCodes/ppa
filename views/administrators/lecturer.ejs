@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../include/head' ); -%>
+  <body>
+    <div class="main-wrapper">
+      <%- include('../include/pageheader' ); -%> <%-
+      include('../include/admin_sidebar' ); -%>
+
+      <div class="page-wrapper">
+        <div class="content container-fluid">
+          <div class="page-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="page-title">Lecturers</h3>
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="index.html">Dashboard</a>
+                  </li>
+                  <li class="breadcrumb-item active">Lecturers</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card card-table">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table
+                      class="table table-hover table-center mb-0 datatable"
+                    >
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>First Name</th>
+                          <th>Surname</th>
+                          <th>Gender</th>
+                          <th># Of Assigned Modules</th>
+                          
+                          <th>Mobile Number</th>
+                          <th>View</th>
+                          <th class="text-right">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                        <% lecturers.forEach(function(lecturer) { %>
+                          
+                          
+                        <tr>
+                          <td><%= lecturer.user_id %> </td>
+                          <td><%= lecturer.first_name %> </td>
+                          <td><%= lecturer.last_name %> </td>
+                          <td><%= lecturer.gender %> </td>
+                          <td class="text-center"><%= lecturer.module_count %> </td>
+
+                          <td><%= lecturer.phone_number %> </td>
+                          <td>
+                            <button class="btn btn-primary" onclick="getLecturerDetails('<%= lecturer.user_id %>')">View</button>
+                          </td>
+                          <td class="text-right">
+                            <div class="actions">
+                            
+                              <a href="#" class="btn btn-sm bg-danger-light">
+                                <i class="fas fa-trash"></i>
+                              </a>
+                            </div>
+                          </td>
+                        </tr>
+
+                        <% }); %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <%- include('../include/footer' ); -%>
+      </div>
+    </div>
+
+    <%- include('../include/scripts' ); -%>
+    <script>
+      // Function to handle button click
+      // Function to handle button click
+      function getLecturerDetails(lecturerId) {
+        
+        fetch(`lecturerDetails/${lecturerId}`)
+          .then((response) => response.json()) // Assuming the server responds with JSON data
+          .then((data) => {
+            // Redirect to another page and pass the data as a query parameter
+            window.location.href = `lecturer_modules?lecturerId=${lecturerId}&data=${encodeURIComponent(
+              JSON.stringify(data)
+            )}`;
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    </script>
+    
+  </body>
+</html>

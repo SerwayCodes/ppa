@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Precious PVT Academy Landing Page</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;family=Paytone+One&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#003366", // Dark Blue from images
+            "background-light": "#F3F4F6", // Light Gray
+            "background-dark": "#111827", // Dark Gray
+            "surface-light": "#FFFFFF",
+            "surface-dark": "#1F2937",
+            "accent-red": "#DC2626",
+            "accent-yellow": "#FBBF24",
+            "accent-orange": "#F97316",
+            "accent-indigo": "#4338CA",
+            "accent-green": "#16A34A",
+          },
+          fontFamily: {
+            display: ["Paytone One", "sans-serif"],
+            body: ["Roboto", "sans-serif"],
+          },
+          borderRadius: {
+            DEFAULT: "1rem", // 16px
+            'xl': '1.5rem', // 24px
+            '2xl': '2rem', // 32px
+          },
+        },
+      },
+    };
+  </script>
+<style>
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-body text-gray-700 dark:text-gray-300">
+<div class="min-h-screen">
+<header class="bg-surface-light dark:bg-surface-dark shadow-md">
+<div class="container mx-auto px-6 py-4 flex justify-between items-center">
+<div class="flex items-center space-x-4">
+<div class="p-3 bg-primary rounded-full">
+<span class="material-icons-outlined text-white text-3xl">school</span>
+</div>
+<div>
+<h1 class="font-display text-2xl md:text-3xl text-primary tracking-wider">PRECIOUS PVT ACADEMY</h1>
+<p class="text-sm text-gray-500 dark:text-gray-400">The home of knowledge</p>
+</div>
+</div>
+<nav class="hidden md:flex space-x-6">
+<a class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors" href="#">About</a>
+<a class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors" href="#">Academics</a>
+<a class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors" href="#">Admissions</a>
+<a class="bg-primary text-white px-4 py-2 rounded-lg hover:opacity-90 transition-opacity" href="#">Contact Us</a>
+</nav>
+<button class="md:hidden text-gray-600 dark:text-gray-300">
+<span class="material-icons-outlined">menu</span>
+</button>
+</div>
+</header>
+<main class="container mx-auto px-6 py-12 md:py-20">
+<section class="text-center mb-16 md:mb-24">
+<h2 class="font-display text-4xl md:text-6xl text-gray-800 dark:text-white mb-4">Excellence in Education</h2>
+<p class="text-lg md:text-xl max-w-3xl mx-auto text-gray-600 dark:text-gray-400">
+          Preparing students for success in college, career, and life through a rigorous and supportive academic environment.
+        </p>
+</section>
+<section class="mb-16 md:mb-24">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-lg p-8 transform hover:-translate-y-2 transition-transform duration-300">
+<div class="bg-accent-red text-white font-display text-2xl py-3 px-6 rounded-lg inline-block -mt-14 mb-6">OUR MISSION</div>
+<p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+              We exist to advance knowledge, skills and character that prepare students for success in college, career, and life and become self-reliant in a changing world.
+            </p>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-lg p-8 transform hover:-translate-y-2 transition-transform duration-300">
+<div class="bg-accent-yellow text-gray-900 font-display text-2xl py-3 px-6 rounded-lg inline-block -mt-14 mb-6">OUR VISION</div>
+<p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+              To be a Centre of Excellence in the provision of high-quality education for sustainable development.
+            </p>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-lg p-8 transform hover:-translate-y-2 transition-transform duration-300">
+<div class="bg-accent-orange text-white font-display text-2xl py-3 px-6 rounded-lg inline-block -mt-14 mb-6">OUR GOAL</div>
+<p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+              The main goal of Precious Pvt Academy is to ensure that all students reach high levels of academic performance through rigorous and relevant curricula.
+            </p>
+</div>
+</div>
+</section>
+<section>
+<div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+<div class="lg:col-span-2 bg-surface-light dark:bg-surface-dark rounded-xl shadow-lg p-8">
+<h3 class="bg-accent-indigo text-white font-display text-2xl py-3 px-6 rounded-lg inline-block -mt-14 mb-6">OBJECTIVES</h3>
+<ul class="space-y-6">
+<li class="flex items-start space-x-3">
+<span class="material-icons-outlined text-primary mt-1">rocket_launch</span>
+<p>To provide a strong academic foundation that promotes innovation and creativity among the young people.</p>
+</li>
+<li class="flex items-start space-x-3">
+<span class="material-icons-outlined text-primary mt-1">shield</span>
+<p>To instill discipline and hardworking spirit that prepare students to become ethical responsible citizens.</p>
+</li>
+</ul>
+</div>
+<div class="lg:col-span-1 flex justify-center items-center">
+<img alt="Two smiling students in school uniform" class="rounded-2xl shadow-xl w-64 h-auto object-cover lg:w-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2kGTC9yHNVBtHNQxdBXHlKKNQ6XShUtp0alqiYU_PnxArTm7MjLq0CcOaSqAM8NEyVOfY82ih9V_UDcBKh8l8T7ryG4MvU9JiCXDzC0ZSnVVCii9P92wZ3d6E_JmUezLDVP55nyO65OfcNeNKWFvUlUEQZTjn2fK2UogYspa5bhfVxmCtL0VLT6YnP_coYkbKHUeU3KW_7VmhmP68EeUJS4XnJ8_p2d-b9dYAOqVcLmUX9qN-Ovn3Pdbc60fc1q8wXv3h8UXo9CI"/>
+</div>
+<div class="lg:col-span-2 bg-surface-light dark:bg-surface-dark rounded-xl shadow-lg p-8">
+<h3 class="bg-accent-green text-white font-display text-2xl py-3 px-6 rounded-lg inline-block -mt-14 mb-6">CORE VALUES</h3>
+<ul class="space-y-6">
+<li class="flex items-start space-x-3">
+<span class="material-icons-outlined text-primary mt-1">star</span>
+<p><strong>Excellence</strong> - Meeting the highest expectations.</p>
+</li>
+<li class="flex items-start space-x-3">
+<span class="material-icons-outlined text-primary mt-1">work</span>
+<p><strong>Professionalism</strong> - Acting with a degree of competence and skills.</p>
+</li>
+<li class="flex items-start space-x-3">
+<span class="material-icons-outlined text-primary mt-1">lightbulb</span>
+<p><strong>Innovation</strong> - Thinking about new ways of doing business.</p>
+</li>
+<li class="flex items-start space-x-3">
+<span class="material-icons-outlined text-primary mt-1">thumb_up</span>
+<p><strong>Reliability</strong> - Delivering on our promises.</p>
+</li>
+</ul>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-primary text-white mt-16 md:mt-24">
+<div class="container mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+<p class="font-bold mb-4 md:mb-0">OUR MOTTO: "Your child's future is now not later"</p>
+<p class="font-bold">OUR SLOGAN: "The home of knowledge"</p>
+</div>
+</footer>
+</div>
+
+</body></html>

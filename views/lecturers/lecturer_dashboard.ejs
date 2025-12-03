@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../include/head' ); -%>
+  <body>
+    <div class="main-wrapper">
+      <%- include('../include/pageheader'); -%> <%-
+      include('../include/lecturer_sidebar' ); -%>
+
+      <div class="page-wrapper">
+        <div class="content container-fluid">
+          <div class="page-header">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3 class="page-title">
+                  Welcome <%= lecturer_details.first_name %>!
+                </h3>
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="index">Dashboard</a>
+                  </li>
+                  <li class="breadcrumb-item active">Lecturer Dashboard</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <% if(messages.success) { %>
+          <div class="alert alert-success"><%= messages.success %></div>
+          <% } %> <% if(messages.error) { %>
+          <div class="alert alert-danger"><%= messages.error %></div>
+          <% } %>
+          <div class="row">
+            <div class="col-xl-3 col-sm-6 col-12 d-flex">
+              <div class="card bg-five w-100">
+                <div class="card-body">
+                  <div
+                    class="db-widgets d-flex justify-content-between align-items-center"
+                  >
+                    <div class="db-icon">
+                      <i class="fas fa-chalkboard"></i>
+                    </div>
+                    <div class="db-info">
+                      <h3><%= lecturer_details.total_classes %></h3>
+                      <h6>Total Classes</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12 d-flex">
+              <div class="card bg-six w-100">
+                <div class="card-body">
+                  <div
+                    class="db-widgets d-flex justify-content-between align-items-center"
+                  >
+                    <div class="db-icon">
+                      <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div class="db-info">
+                      <h3><%= lecturer_details.total_students %></h3>
+                      <h6>Total Students</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12 d-flex">
+              <div class="card bg-seven w-100">
+                <div class="card-body">
+                  <div
+                    class="db-widgets d-flex justify-content-between align-items-center"
+                  >
+                    <div class="db-icon">
+                      <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="db-info">
+                      <h3><%= lecturer_details.total_lessons %></h3>
+                      <h6>Total Lessons per week</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12 d-flex">
+              <div class="card bg-eight w-100">
+                <div class="card-body">
+                  <div
+                    class="db-widgets d-flex justify-content-between align-items-center"
+                  >
+                    <div class="db-icon">
+                      <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="db-info">
+                      <h3><%= lecturer_details.total_hrs %></h3>
+                      <h6>Total Hours Per Week</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-6 col-12 d-flex">
+              <div class="card flex-fill">
+                <div class="card-header">
+                  <div class="row align-items-center">
+                    <div class="col-6">
+                      <h5 class="card-title">Lessons Per Week</h5>
+                    </div>
+                    <div class="col-6">
+                      <span class="float-right view-link"
+                        ><a href="classes">View All Modules</a></span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="pt-3 pb-3">
+                  <div class="table-responsive">
+                    <table class="table table-center">
+                      <tbody>
+                        <tr>
+                          <td>
+                            <div>
+                              <p>No modules are available</p>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-6 col-12 d-flex">
+              <div class="card flex-fill">
+                <div class="card-header">
+                  <div class="row align-items-center">
+                    <div class="col-12">
+                      <h5 class="card-title">Calendar Of Upcomming Events</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div id="calendar-doctor" class="calendar-container"></div>
+                  <div class="calendar-info calendar-info1">
+                    <div class="calendar-info calendar-info1">
+                      <% events.forEach(function(event){ %>
+
+                      <div class="calendar-details">
+                        <h6
+                          class="calendar-blue d-flex justify-content-between align-items-center"
+                        >
+                          <%=event.event_name %>
+                          <span>
+                            <%=event.start_date %> - <%=event.start_date %>
+                          </span>
+                        </h6>
+                      </div>
+                      <% })%>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%- include('../include/footer'); -%>
+      </div>
+    </div>
+
+    <%- include('../include/scripts' ); -%>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../include/head' ); -%>
+  <body>
+    <div class="main-wrapper">
+      <%- include('../include/pageheader' ); -%> <%-
+      include('../include/admin_sidebar' ); -%>
+      <div class="page-wrapper">
+        <div class="content container-fluid">
+          <div class="page-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="page-title">Fees Collections</h3>
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="index.html">Accounts</a>
+                  </li>
+                  <li class="breadcrumb-item active">Fees Collections</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card card-table">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table
+                      class="table table-hover table-center mb-0 datatable"
+                    >
+                      <thead>
+                        <tr>
+                          <th>Fees ID</th>
+                          <th>Name</th>
+                          <th>Amount</th>
+                          <th>Paid Date</th>
+                          <th>Issued By</th>
+                          <th>Comment</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% transactions.forEach(function(transaction) { %>
+                        <tr>
+                          <td><%= transaction.transaction_id %></td>
+                          <td><%= transaction.full_name %></td>
+                          <td><%= transaction.transaction_amount %></td>
+                          <td><%= transaction.transaction_date %></td>
+                          <td><%= transaction.issued_by %></td>
+                          <td><%= transaction.comment %></td>
+                        </tr>
+                        <% }); %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <%- include('../include/footer' ); -%>
+      </div>
+    </div>
+    <%- include('../include/scripts' ); -%>
+  </body>
+</html>

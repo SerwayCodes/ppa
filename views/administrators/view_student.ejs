@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../include/head' ); -%>
+  <body>
+    <div class="main-wrapper">
+      <%- include('../include/pageheader' ); -%> <%-
+      include('../include/student_sidebar' ); -%>
+      <div class="page-wrapper">
+        <div class="content">
+          <div class="page-header card-header">
+            <% if(messages.success) { %>
+            <div class="alert alert-success"><%= messages.success %></div>
+            <% } %> <% if(messages.error) { %>
+            <div class="alert-danger"><%= messages.error %></div>
+            <% } %>
+            <div class="row">
+              <div class="col-sm-12">
+                <h3 class="page-title">Student Profile</h3>
+              </div>
+            </div>
+          </div>
+          <div class="tab-content" id="nav-tabContent">
+            <div
+              class="tab-pane fade show active"
+              id="nav-home"
+              role="tabpanel"
+              aria-labelledby="nav-home-tab"
+            >
+              <div class="card-body">
+                <div class="row justify-content-center">
+                  <div class="col-lg-12 p-0 ml-1">
+                    <div class="card card-table">
+                      <div class="card-header">
+                        <h4 class="card-title">STUDENT</h4>
+                      </div>
+
+                      <div class="table-responsive">
+                        <table class="table table-center table-bordered">
+                          <tbody>
+                            <tr>
+                              <td>Full Name</td>
+
+                              <td>
+                                <%= student_details.first_name%> <%=
+                                student_details.last_name %>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Stream</td>
+
+                              <td>Electrical</td>
+                            </tr>
+                            <tr>
+                              <td>mobile</td>
+
+                              <td><%= student_details.phone_number %></td>
+                            </tr>
+                            <tr>
+                              <td>Email</td>
+
+                              <td><%= student_details.email %></td>
+                            </tr>
+                            <tr>
+                              <td>Date of Birth</td>
+
+                              <td><%= student_details.date_of_birth %></td>
+                            </tr>
+                            <tr>
+                              <td>Program</td>
+
+                              <td><%= student_details.allocated_program %></td>
+                            </tr>
+                            <tr>
+                              <td>Gender</td>
+
+                              <td><%= student_details.gender %></td>
+                            </tr>
+                            <tr>
+                              <td>Nationality</td>
+
+                              <td><%= student_details.nationality %></td>
+                            </tr>
+                            <tr>
+                              <td>Home District</td>
+
+                              <td><%= student_details.district %></td>
+                            </tr>
+
+                            <tr>
+                              <td>Tradition Authority</td>
+
+                              <td><%= student_details.tradi_auth %></td>
+                            </tr>
+                            <tr>
+                              <td>Village</td>
+
+                              <td><%= student_details.village %></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12 p-0 ml-1">
+                    <div class="card card-table">
+                      <div class="card-header">
+                        <h4 class="card-title">NEXT OF KIN</h4>
+                      </div>
+
+                      <div class="table-responsive">
+                        <table class="table table-center table-bordered">
+                          <tbody>
+                            <tr>
+                              <td>Full Name</td>
+
+                              <td><%= student_details.next_of_kin_name %></td>
+                            </tr>
+                            <tr>
+                              <td>Relationship</td>
+
+                              <td>
+                                <%= student_details.next_of_kin_relationship %>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>mobile</td>
+
+                              <td>
+                                <%= student_details.next_of_kin_phone_number %>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Email</td>
+
+                              <td><%= student_details.next_of_kin_email %></td>
+                            </tr>
+
+                            <tr>
+                              <td>Address</td>
+
+                              <td>
+                                <%= student_details.next_of_kin_address %>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <%- include('../include/footer' ); -%>
+      </div>
+    </div>
+
+    <%- include('../include/scripts' ); -%>
+  </body>
+</html>

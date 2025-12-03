@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!--    HEAD SECTION -->
+  <%- include('../include/head' ); -%>
+
+  <body>
+    <div class="main-wrapper">
+      <%- include('../include/pageheader' ); -%> <%-
+      include('../include/student_sidebar' ); -%>
+      <!-- LEFT SIDE BAR MENU END-->
+
+      <!-- MAIN PAGE CONTENT-->
+      <div class="page-wrapper">
+        <div class="content container-fluid">
+          <div class="page-header">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3 class="page-title">
+                  Welcome <%= student_details.first_name %>!
+                </h3>
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="#">Dashboard</a>
+                  </li>
+                  <li class="breadcrumb-item active">Student Dashboard</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xl-4 col-sm-6 col-12 d-flex">
+              <div class="card bg-six w-100">
+                <div class="card-body">
+                  <div class="db-widgets d-flex align-items-center">
+                    <div class="db-icon">
+                      <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="db-info m-auto">
+                      <h4><a href="subjects">All Modules</a></h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-sm-6 col-12 d-flex">
+              <div class="card bg-six w-100">
+                <div class="card-body">
+                  <div class="db-widgets d-flex align-items-center">
+                    <div class="db-icon">
+                      <i class="fa-regular fa-registered"></i>
+                    </div>
+                    <div class="db-info m-auto">
+                      <h4>Registration Status</h4>
+                      <% if (student_details.registration_status) { %>
+                      <h4 class="text-success">Registered</h4>
+                      <% } else {%>
+                      <h4 class="text-danger">Not Registered</h4>
+                      <% } %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-sm-6 col-12 d-flex">
+              <div class="card bg-six w-100">
+                <div class="card-body">
+                  <div class="db-widgets d-flex align-items-center">
+                    <div class="db-icon">
+                      <i class="fas fa-money-check-dollar"></i>
+                    </div>
+                    <div class="db-info m-auto">
+                      <h4>Fees Balance</h4>
+                      <h4 style="color: red">
+                        K <%=student_details.fees_balance %>
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-6 col-12 d-flex">
+              <div class="card flex-fill">
+                <div class="card-header">
+                  <div class="row align-items-center">
+                    <div class="col-12">
+                      <h5 class="card-title">Notice Board</h5>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                  <ul>
+                    
+                      <h6>
+                        <% if (now>= student_details.registration_start_date &&
+                        now <= student_details.registration_end_date) { %> <% if
+                        (student_details.registration_status) { %> <li>Registered</li> <%
+                        } else { %> <li>Registration is Active from <%=
+                        student_details.registration_start_date %> to <%=
+                        student_details.registration_end_date %> Click
+                        <a href="register">Here</a>
+                        to Register </li> <% } %> <% } else { %> <li> Registration Period
+                        Closed</li> <% } %>
+                      </h6>
+                   
+                   
+                      <h6>
+                        <% if(student_details.exam_results_status){%> <li> Exam
+                        Results are Out click
+                        <a href="exams">Here</a> to view your Grades </li><%}%>
+                      </h6>
+                    
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6 col-12 d-flex">
+              <div class="card flex-fill">
+                <div class="card-header">
+                  <div class="row align-items-center">
+                    <div class="col-12">
+                      <h5 class="card-title">Calendar Of Upcomming Events</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div id="calendar-doctor" class="calendar-container"></div>
+                  <div class="calendar-info calendar-info1">
+                    <% events.forEach(function(event){ %>
+
+                    <div class="calendar-details">
+                      <h6
+                        class="calendar-blue d-flex justify-content-between align-items-center"
+                      >
+                        <%=event.event_name %>
+                        <span>
+                          <%=event.start_date %> - <%=event.start_date %>
+                        </span>
+                      </h6>
+                    </div>
+                    <% })%>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--CALENDAR-->
+          </div>
+        </div>
+
+        <!-- FOOTER-->
+        <%- include('../include/footer' ); -%>
+      </div>
+    </div>
+
+    <%- include('../include/scripts' ); -%>
+  </body>
+</html>

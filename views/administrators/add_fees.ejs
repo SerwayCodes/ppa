@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../include/head' ); -%>
+  <body>
+    <div class="main-wrapper">
+      <%- include('../include/pageheader' ); -%> <%-
+      include('../include/admin_sidebar' ); -%>
+      <div class="page-wrapper">
+        <div class="content container-fluid">
+          <div class="page-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="page-title">Add Fees</h3>
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="">Fees</a></li>
+                  <li class="breadcrumb-item active">Add Fees</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <% if(messages.success) { %>
+            <div class="alert alert-success"><%= messages.success %></div>
+            <% } %> <% if(messages.error) { %>
+            <div class=" alert alert-danger"><%= messages.error %></div>
+            <% } %>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card">
+                <div class="card-body">
+                  <form action="updateFees" method="post">
+                    <div class="row">
+                      <div class="col-12">
+                        <h5 class="form-title">
+                          <span>Fees Information</span>
+                        </h5>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Student ID</label>
+                          <input
+                            type="text"
+                            name="student_id"
+                            id="student_id"
+                            class="form-control"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Full name</label>
+                          <input
+                            type="text"
+                            name="student_name"
+                            id="student_name"
+                            class="form-control"
+                            readonly
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Fees Balance</label>
+                          <input
+                            type="text"
+                            name="fees_balance"
+                            id="fees_balance"
+                            class="form-control"
+                            readonly
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Fees Amount</label>
+                          <input
+                            type="number"
+                            name="transaction_amount"
+                            id="transaction_amount"
+                            class="form-control"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Comment</label>
+                          <input
+                            type="text"
+                            name="comment"
+                            
+                            class="form-control"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <button type="submit" class="btn btn-primary">
+                          Submit
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%- include('../include/footer' ); -%>
+      </div>
+    </div>
+
+    <%- include('../include/scripts'); -%>
+
+    <script>
+      // Listen to the student ID input field
+      const studentIdInput = document.getElementById("student_id");
+      studentIdInput.addEventListener("input", async function () {
+        const student_id = studentIdInput.value;
+        const studentId = encodeURIComponent(student_id)
+        console.log('fetching');
+
+        try {
+          // Fetch student details based on the entered ID
+          const response = await fetch(`fetchStudentDetails/${studentId}`);
+          if (response.ok) {
+            const studentData = await response.json();
+
+            // Populate student name and fees balance in the form
+            document.getElementById(
+              "student_name"
+            ).value = `${studentData.first_name} ${studentData.last_name}`;
+            document.getElementById(
+              "fees_balance"
+            ).value = `K${studentData.fees_balance}`;
+          } else {
+            // Handle error response, e.g., show an error message to the user
+          }
+        } catch (error) {
+          console.error(error);
+          // Handle fetch error, e.g., show an error message to the user
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../include/head' ); -%>
+  <body>
+    <div class="main-wrapper">
+      <%- include('../include/pageheader' ); -%> <%-
+      include('../include/admin_sidebar' ); -%>
+
+      <div class="page-wrapper">
+        <div class="content container-fluid">
+          <div class="page-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="page-title">Lecturers</h3>
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="index.html">Dashboard</a>
+                  </li>
+                  <li class="breadcrumb-item active">Lecturers</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <% if(messages.success) { %>
+          <div class="alert alert-success"><%= messages.success %></div>
+          <% } %> <% if(messages.error) { %>
+          <div class="alert-danger"><%= messages.error %></div>
+          <% } %>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card card-table">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table
+                      class="table table-hover table-center mb-0 datatable"
+                    >
+                      <thead>
+                        <tr>
+                          <th>Module ID</th>
+                          <th>Module Name</th>
+
+                          <th>De-Assigned Module</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% if (data.lecturerModules &&
+                        data.lecturerModules.length > 0) { %> <%
+                        data.lecturerModules.forEach(function(module) { %>
+                        <tr>
+                          <td><%= module.subject_id %></td>
+                          <td><%= module.subject_name %></td>
+                          <td>
+                            <button
+                              class="btn btn-danger"
+                              onclick="deAssignModule('<%= lecturerId %>','<%= module.subject_id %>')"
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                        <% }); %> <% } else { %>
+                        <tr>
+                          <td colspan="3">No Modules available</td>
+                        </tr>
+                        <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <%- include('../include/footer' ); -%>
+      </div>
+    </div>
+
+    <%- include('../include/scripts' ); -%>
+    <script>
+   function deAssignModule(lecturerId, courseId) {
+  fetch('deAssignModule', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ lecturerId, courseId }),
+  })
+  .then((response) => response.json()) // Assuming the server responds with JSON data
+          .then((data) => {
+            // Redirect to another page and pass the data as a query parameter
+            window.location.href = `lecturer_modules?lecturerId=${lecturerId}&data=${encodeURIComponent(
+              JSON.stringify(data)
+            )}`;
+          })
+  .catch(error => {
+    console.error(error);
+    // Handle network errors or other fetch issues
+  });
+}
+
+    </script>
+  </body>
+</html>

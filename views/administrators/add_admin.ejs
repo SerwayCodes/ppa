@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../include/head' ); -%>
+  <body>
+    <div class="main-wrapper">
+      <%- include('../include/pageheader' ); -%> <%-
+      include('../include/admin_sidebar' ); -%>
+      <div class="page-wrapper">
+        <div class="content container-fluid">
+          <div class="page-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="page-title">Add Admin</h3>
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="Lecturers.html">Admin</a>
+                  </li>
+                  <li class="breadcrumb-item active">Add Admin</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <% if(messages.success) { %>
+            <div class="alert alert-success"><%= messages.success %></div>
+            <% } %> <% if(messages.error) { %>
+            <div class="alert alert-danger"><%= messages.error %></div>
+            <% } %>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card">
+                <div class="card-body">
+                  <form action="add_admin" method="post">
+                    <div class="row">
+                      <div class="col-12">
+                        <h5 class="form-title"><span>Basic Details</span></h5>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Admin ID</label>
+                          <input
+                            name="admin_id"
+                            type="text"
+                            class="form-control"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>First Name</label>
+                          <input
+                            name="first_name"
+                            type="text"
+                            class="form-control"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Last Name</label>
+                          <input
+                            name="last_name"
+                            type="text"
+                            class="form-control"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Email</label>
+                          <input
+                            name="email"
+                            type="email"
+                            class="form-control"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <button type="submit" class="btn btn-primary">
+                          Submit
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%- include('../include/footer' ); -%>
+      </div>
+    </div>
+    <%- include('../include/scripts' ); -%>
+  </body>
+</html>

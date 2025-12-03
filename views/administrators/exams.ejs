@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../include/head' ); -%>
+  <body>
+    <div class="main-wrapper">
+      <%- include('../include/pageheader' ); -%> 
+      <%- include('../include/admin_sidebar' ); -%>
+
+      <div class="page-wrapper">
+        <div class="content container-fluid">
+          <div class="page-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="page-title">Exams & Reports</h3>
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#">Reports Management</a></li>
+                  <li class="breadcrumb-item active">Print Reports</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <% if(messages.success) { %>
+            <div class="alert alert-success"><%= messages.success %></div>
+          <% } %> 
+          <% if(messages.error) { %>
+            <div class="alert alert-danger"><%= messages.error %></div>
+          <% } %>
+
+          <!-- Individual Student Report Section -->
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title">Print Individual Student Report</h5>
+                </div>
+                <div class="card-body">
+                  <form action="print-individual-report" method="post" target="_blank">
+                    <div class="row">
+                      <div class="col-12 col-md-6">
+                        <div class="form-group">
+                          <label>Student ID</label>
+                          <input type="text" class="form-control" name="studentId" placeholder="Enter Student ID" required>
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <div class="form-group">
+                          <label>Exam Type</label>
+                          <select class="form-control" name="examType" required>
+                            <option value="">Select Exam</option>
+                            <option value="midterm">Midterm Exam</option>
+                            <option value="endterm">End of Term Exam</option>
+                            <option value="annual">Annual Exam</option>
+                          </select>
+                        </div>
+                      </div>
+                           <div class="col-12 col-md-6">
+                        <div class="form-group">
+                          <label>Number of Term</label>
+                          <select class="form-control" name="termNumber" required>
+                            <option value="">Select Exam</option>
+                            <option value="1">Term 1</option>
+                            <option value="2">Term 2</option>
+                            <option value="3">Term 3</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <div class="form-group">
+                          <label>academic Year</label>
+                          <input type="text" class="form-control" name="academicYear" placeholder="i.e 2024-2025" required>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <button type="submit" class="btn btn-primary">
+                          <i class="fas fa-print"></i> Print Individual Report
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Class Ranking Reports Section -->
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title">Print Class Ranking Reports</h5>
+                </div>
+                <div class="card-body">
+                  <form action="print-class-ranking" method="post" target="_blank">
+                    <div class="row">
+                      <div class="col-12 col-md-6">
+                        <div class="form-group">
+                          <label>Select Form</label>
+                          <select class="form-control" name="formLevel" required>
+                            <option value="">Select Form</option>
+                            <option value="form1">Form 1</option>
+                            <option value="form2">Form 2</option>
+                            <option value="form3">Form 3</option>
+                            <option value="form4">Form 4</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <div class="form-group">
+                          <label>Exam Type</label>
+                          <select class="form-control" name="examType" required>
+                            <option value="">Select Exam</option>
+                            <option value="midterm">Midterm Exam</option>
+                            <option value="endterm">End of Term Exam</option>
+                            <option value="annual">Annual Exam</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <button type="submit" class="btn btn-success">
+                          <i class="fas fa-print"></i> Print Class Ranking
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Print All Forms -->
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title">Quick Print All Forms Ranking</h5>
+                </div>
+                <div class="card-body">
+                  <form action="print-all-forms-ranking" method="post" target="_blank">
+                    <div class="row">
+                      <div class="col-12 col-md-6">
+                        <div class="form-group">
+                          <label>Exam Type</label>
+                          <select class="form-control" name="examType" required>
+                            <option value="">Select Exam</option>
+                            <option value="midterm">Midterm Exam</option>
+                            <option value="endterm">End of Term Exam</option>
+                            <option value="annual">Annual Exam</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <div class="form-group">
+                          <label>Include Details</label>
+                          <select class="form-control" name="detailLevel">
+                            <option value="summary">Summary Only</option>
+                            <option value="detailed">Detailed Report</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <button type="submit" class="btn btn-info">
+                          <i class="fas fa-print"></i> Print All Forms Ranking
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Original Exam Release Controls -->
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card">
+                <div class="card-body">
+                  <form action="release_exams" method="post">
+                    <div class="row">
+                      <div class="col-12">
+                        <button type="submit" class="btn btn-primary">
+                          Release Results
+                        </button>
+                      </div>
+                    </div>
+                  </form> 
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card">
+                <div class="card-body">
+                  <form action="not-rem-exam" method="post">
+                    <div class="row">
+                      <div class="col-12">
+                        <button type="submit" class="btn btn-warning">
+                          Disable release Exam Notification
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%- include('../include/footer' ); -%>
+      </div>
+    </div>
+    <%- include('../include/scripts' ); -%>
+    
+    <style>
+      .card {
+        margin-bottom: 20px;
+      }
+      .btn {
+        margin-top: 10px;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+    </style>
+  </body>
+</html>

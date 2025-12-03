@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../include/head' ); -%>
+  <body>
+    <div class="main-wrapper">
+      <%- include('../include/pageheader' ); -%> <%-
+      include('../include/admin_sidebar' ); -%>
+      <div class="page-wrapper">
+        <div class="content container-fluid">
+          <div class="page-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="page-title">Classes</h3>
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="Classes">Classes</a>
+                  </li>
+                  <li class="breadcrumb-item active">Class List</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card card-table">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered table-input">
+                      <thead>
+                        <tr>
+                          <th scope="col">Class ID</th>
+                          <th scope="col">Class</th>
+
+                          <th scope="col"># of students</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% programStudentCounts.forEach(function(programCount) {
+                        %>
+                        <tr>
+                          <td><%= programCount.form_level %></td>
+                          <td>
+                            <%= classes.find(form => form.form_level ===
+                            programCount.form_level).class_name %>
+                          </td>
+                          <td><%= programCount.student_count %></td>
+                          <td>
+                            <button
+                              class="btn btn-primary"
+                              onclick="getClassDetails('<%= programCount.form_level%>')"
+                            >
+                              View
+                            </button>
+                          </td>
+                        </tr>
+                        <% }); %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%- include('../include/footer' ); -%>
+      </div>
+    </div>
+    <%- include('../include/scripts' ); -%>
+    <script>
+      // Function to handle button click
+      function getClassDetails(programId) {
+        // Fetch data from the server using programId
+        fetch(`view_class/${programId}`)
+          .then((response) => response.json()) // Assuming the server responds with JSON data
+          .then((data) => {
+            // Redirect to another page and pass the data as a query parameter
+            window.location.href = `students_class?programId=${programId}&data=${encodeURIComponent(
+              JSON.stringify(data)
+            )}`;
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    </script>
+  </body>
+</html>

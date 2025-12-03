@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../include/head' ); -%>
+  <body>
+    <div class="main-wrapper">
+      <%- include('../include/pageheader' ); -%> <%-
+      include('../include/admin_sidebar' ); -%>
+      <div class="page-wrapper">
+        <div class="content container-fluid">
+          <div class="page-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="page-title">Add Student</h3>
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a>Students</a>
+                  </li>
+                  <li class="breadcrumb-item active">Add Students</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <% if(messages.success) { %>
+          <div class="alert alert-success"><%= messages.success %></div>
+          <% } %> <% if(messages.error) { %>
+          <div class="alert alert-danger"><%= messages.error %></div>
+          <% } %>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card">
+                <div class="card-body">
+                  <form action="add_student" method="post" autocomplete="off">
+                    <div class="row">
+                      <div class="col-12">
+                        <h5 class="form-title">
+                          <span>Student Information</span>
+                        </h5>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>First Name</label>
+                          <input
+                            name="first_name"
+                            type="text"
+                            class="form-control"
+                            autocomplete="off"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Surname</label>
+                          <input
+                            name="last_name"
+                            type="text"
+                            class="form-control"
+                            autocomplete="off"
+                            required
+                          />
+                        </div>
+                      </div>
+                       <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Student Id</label>
+                          <input
+                            name="student_id"
+                            type="text"
+                            class="form-control"
+                            autocomplete="off"
+                            required
+                          />
+                        </div>
+                      </div>
+                     
+
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Class</label>
+                          <select name="form_level" class="form-control" required>
+                            <option value="">Select Class</option>
+                            <option value="1" name="form_level">Form 1</option>
+                            <option value="2" name="form_level">Form 2</option>
+                            <option value="3" name="form_level">Form 3</option>
+                            <option value="4" name="form_level">Form 4</option>
+                            
+                          </select>
+                        </div>
+                      </div>
+
+                     
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label>Parents Email</label>
+                          <div>
+                            <input
+                              name="email"
+                              type="email"
+                              class="form-control"
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label for="password">password</label>
+                          <div>
+                            <input
+                              class="form-control"
+                              type="password"
+                              id="password"
+                              name="password"
+                              oninput="validatePassword1()"
+                            />
+                            <span class="form-text text-muted"
+                              >Passwords must be at least five characters
+                              long.</span
+                            >
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <button
+                          type="submit"
+                          class="btn btn-primary"
+                          id="submit_btn"
+                          disabled
+                        >
+                          Submit
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%- include('../include/footer' ); -%>
+      </div>
+    </div>
+
+    <%- include('../include/scripts' ); -%>
+  </body>
+</html>
