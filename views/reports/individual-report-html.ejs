@@ -1,380 +1,251 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Progress Report - <%= student.first_name %> <%= student.last_name %></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Student Progress Report - <%- student.first_name %> <%- student.last_name %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#003366",
+                        "background-light": "#F3F4F6",
+                        "background-dark": "#111827",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#1F2937",
+                        "text-light-primary": "#1F2937",
+                        "text-dark-primary": "#F9FAFB",
+                        "text-light-secondary": "#6B7280",
+                        "text-dark-secondary": "#9CA3AF",
+                        "border-light": "#E5E7EB",
+                        "border-dark": "#374151",
+                    },
+                    fontFamily: {
+                        display: ["Roboto", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                    },
+                },
+            },
+        };
+    </script>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-            padding: 20px;
+            min-height: max(884px, 100dvh);
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            main, main * {
+                visibility: visible;
+            }
+            main {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                box-shadow: none;
+            }
+            .print-button {
+                display: none !important;
+            }
         }
         
-        .report-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
-        
-        .header {
-            text-align: center;
-            border-bottom: 3px double #333;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .school-name {
-            font-size: 28px;
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-        }
-        
-        .school-motto {
-            font-size: 16px;
-            font-style: italic;
-            color: #7f8c8d;
-            margin-bottom: 15px;
-        }
-        
-        .report-title {
-            font-size: 22px;
-            font-weight: bold;
-            color: #34495e;
-            margin: 15px 0;
-        }
-        
-        .student-info-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-        }
-        
-        .info-item {
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-        
-        .info-label {
-            font-weight: bold;
-            display: inline-block;
-            width: 180px;
-        }
-        
-        .results-table {
-            width: 100%;
-            margin-bottom: 30px;
-            border-collapse: collapse;
-        }
-        
-        .results-table th {
-            background-color: #2c3e50;
-            color: white;
-            padding: 12px;
-            text-align: center;
-            font-weight: bold;
-            border: 1px solid #34495e;
-        }
-        
-        .results-table td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: center;
-        }
-        
-        .subject-col {
-            text-align: left;
-            font-weight: bold;
-            background-color: #f8f9fa;
-        }
-        
-        .total-row {
-            background-color: #e8f4f8;
-            font-weight: bold;
-        }
-        
-        .grade-A { background-color: #d4edda !important; }
-        .grade-B { background-color: #d1ecf1 !important; }
-        .grade-C { background-color: #fff3cd !important; }
-        .grade-D { background-color: #f8d7da !important; }
-        .grade-F { background-color: #f5c6cb !important; }
-        
-        .remarks-section {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
-        
-        .remarks-box {
-            background: white;
-            border: 1px solid #ddd;
-            padding: 15px;
-            min-height: 80px;
-            border-radius: 5px;
-            margin: 10px 0;
-        }
-        
-        .signature-area {
-            border-top: 2px solid #333;
-            padding-top: 20px;
-            margin-top: 30px;
-        }
-        
-        .print-button {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-        }
-        
-        .watermark {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            font-size: 100px;
-            color: rgba(0,0,0,0.05);
-            z-index: -1;
-            pointer-events: none;
-            font-weight: bold;
-        }
-        
-        .stats-card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: bold;
-            color: #3498db;
-        }
-        
-        .stat-label {
-            font-size: 14px;
-            color: #7f8c8d;
-        }
-        
-        .performance-badge {
-            font-size: 14px;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-        }
-        
-        .badge-excellent { background-color: #28a745; color: white; }
-        .badge-good { background-color: #17a2b8; color: white; }
-        .badge-average { background-color: #ffc107; color: black; }
-        .badge-poor { background-color: #dc3545; color: white; }
+        /* Grade colors */
+        .grade-A { background-color: #d4edda !important; color: #155724 !important; }
+        .grade-B { background-color: #d1ecf1 !important; color: #0c5460 !important; }
+        .grade-C { background-color: #fff3cd !important; color: #856404 !important; }
+        grade-D { background-color: #f8d7da !important; color: #721c24 !important; }
+        .grade-F { background-color: #f5c6cb !important; color: #721c24 !important; }
     </style>
 </head>
-<body>
-    <div class="watermark">PREGOUS PRIVATE ACADEMY</div>
-    
+<body class="bg-background-light dark:bg-background-dark font-display">
     <!-- Print Button -->
-    <div class="print-button">
-        <button onclick="window.print()" class="btn btn-primary">
-            <i class="fas fa-print"></i> Print Report
+    <div class="print-button fixed top-2 right-4 z-50">
+        <button onclick="window.print()" class="bg-primary text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-800 transition flex items-center gap-2">
+            <i class="material-icons">print</i>
+            Print Report
         </button>
     </div>
-    
-    <div class="report-container">
-        <!-- Header -->
-        <div class="header">
-            <div class="school-name">PRECIOUS PRIVATE ACADEMY</div>
-            <div class="school-motto">"YOUR CHILD'S FUTURE IS NOW NOT LATER"</div>
-            <div class="report-title">Student Term <%= termNumber %> Progress Report - <%= academicYear %></div>
-        </div>
 
-        <!-- Student Information -->
-        <div class="student-info-card">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="info-item">
-                        <span class="info-label">Student Reg#:</span>
-                        <span><%= student.student_id %></span>
+    <div class="min-h-screen p-2 sm:p-2 lg:p-2 flex items-center justify-center">
+        <main class="w-full max-w-4xl bg-card-light dark:bg-card-dark shadow-lg rounded-lg mx-auto">
+            <header class="text-center p-1 border-b border-border-light dark:border-border-dark">
+                <img alt="Precious Private Academy school logo" class="h-24 mx-auto " src="/assets/img/ppalogo.jpg"/>
+                <h1 class="text-lg font-bold uppercase text-primary tracking-wider">Precious Private Academy</h1>
+                <p class="text-sm text-text-light-secondary dark:text-text-dark-secondary italic mt-1">"YOUR CHILD'S FUTURE IS NOW NOT LATER"</p>
+                <h2 class="text-xl font-bold mt-2 text-text-light-primary dark:text-text-dark-primary">
+                    Student Term <%- termNumber %> Progress Report - <%- academicYear %>
+                </h2>
+            </header>
+
+            <section class="p-6 text-sm">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="flex items-center">
+                        <span class="font-semibold text-text-light-secondary dark:text-text-dark-secondary w-28 text-center">Student Reg#:</span>
+                        <span class="flex-1  border border-border-light dark:border-border-dark rounded bg-background-light dark:bg-background-dark text-text-light-primary dark:text-text-dark-primary">
+                            <%- student.student_id %>
+                        </span>
                     </div>
-                    <div class="info-item">
-                        <span class="info-label">Student Name:</span>
-                        <span><%= student.first_name %> <%= student.last_name %></span>
+                    <div class="flex items-center">
+                        <span class="font-semibold text-text-light-secondary dark:text-text-dark-secondary w-28 text-center">Position:</span>
+                        <span class="flex-1  border border-border-light dark:border-border-dark rounded bg-background-light dark:bg-background-dark text-text-light-primary dark:text-text-dark-primary">
+                            <%- studentRank.position %>
+                        </span>
+                        <span class="mx-2 text-text-light-secondary dark:text-text-dark-secondary text-center">Out of</span>
+                        <span class="w-16  border border-border-light dark:border-border-dark rounded bg-background-light dark:bg-background-dark text-text-light-primary dark:text-text-dark-primary">
+                            <%- studentRank.totalStudents %>
+                        </span>
                     </div>
-                    <div class="info-item">
-                        <span class="info-label">Form:</span>
-                        <span><%= classInfo.class_name %></span>
+                    <div class="flex items-center">
+                        <span class="font-semibold text-text-light-secondary dark:text-text-dark-secondary w-28 text-center">Student Name:</span>
+                        <span class="flex-1  border border-border-light dark:border-border-dark rounded bg-background-light dark:bg-background-dark text-text-light-primary dark:text-text-dark-primary">
+                            <%- student.first_name %> <%- student.last_name %>
+                        </span>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="info-item">
-                        <span class="info-label">Position:</span>
-                        <span><%= studentRank.position %> out of <%= studentRank.totalStudents %></span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Term Average:</span>
-                        <span><%= studentRank.averageMarks %>%</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Overall Grade:</span>
-                        <span class="performance-badge badge-<%= getGradeClass(studentRank.overallGrade) %>">
-                            <%= studentRank.overallGrade %>
+                    <div class="flex items-center">
+                        <span class="font-semibold text-text-light-secondary dark:text-text-dark-secondary w-28 text-center">Form:</span>
+                        <span class="flex-1  border border-border-light dark:border-border-dark rounded bg-background-light dark:bg-background-dark text-text-light-primary dark:text-text-dark-primary">
+                            <%- classInfo.class_name %>
                         </span>
                     </div>
                 </div>
-            </div>
-        </div>
+            </section>
 
-        <!-- Performance Stats -->
-        <div class="row mb-4">
-            <div class="col-md-3">
-                <div class="stats-card text-center">
-                    <div class="stat-value"><%= studentRank.totalMarks %></div>
-                    <div class="stat-label">Total Marks</div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="stats-card text-center">
-                    <div class="stat-value"><%= studentRank.averageMarks %>%</div>
-                    <div class="stat-label">Average Score</div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="stats-card text-center">
-                    <div class="stat-value"><%= studentRank.position %></div>
-                    <div class="stat-label">Class Position</div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="stats-card text-center">
-                    <div class="stat-value"><%= studentRank.totalStudents %></div>
-                    <div class="stat-label">Total Students</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Results Table -->
-        <div class="table-responsive">
-            <table class="results-table">
-                <thead>
-                    <tr>
-                        <th>SUBJECT</th>
-                        <th>MARKS %</th>
-                        <th>GRADES</th>
-                        <th>POSITION</th>
-                        <th>REMARKS</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% subjects.forEach(subject => { 
-                        const gradeClass = getGradeClass(subject.grade);
-                    %>
-                    <tr>
-                        <td class="subject-col text-align-left"><%= subject.subject_name %></td>
-                        <td class="grade-<%= gradeClass %>"><%= subject.marks || 'N/A' %></td>
-                        <td class="grade-<%= gradeClass %>"><%= subject.grade || 'N/A' %></td>
-                        <td><%= subject.position || 'N/A' %></td>
-                        <td><%= getRemarks(subject.grade) %></td>
-                    </tr>
-                    <% }) %>
-                    <tr class="total-row">
-                        <td class="subject-col"><strong>TOTAL</strong></td>
-                        <td><strong><%= studentRank.totalMarks %></strong></td>
-                        <td><strong><%= studentRank.overallGrade %></strong></td>
-                        <td><strong><%= studentRank.position %></strong></td>
-                        <td><strong><%= getOverallRemarks(studentRank.overallGrade) %></strong></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Grading Scale -->
-        <div class="alert alert-info text-center">
-            <strong>GRADING SCALE:</strong> A=(80-100), B=(70-79), C=(55-69), D=(40-54), F=(00-39)
-        </div>
-
-        <!-- Remarks Section -->
-        <div class="remarks-section">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5><i class="fas fa-user-graduate"></i> Form Teacher Remarks</h5>
-                    <div class="remarks-box">
-                        <%= formTeacherRemarks %>
-                    </div>
-                    <div class="signature-area mt-3">
-                        <p>Signature: _________________________</p>
-                        <p class="text-muted">Form Teacher</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <h5><i class="fas fa-user-tie"></i> Principal's Remarks</h5>
-                    <div class="remarks-box">
-                        <%= principalRemarks %>
-                    </div>
-                    <div class="signature-area mt-3">
-                        <p>Signature: _________________________</p>
-                        <p class="text-muted">Principal</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Fees Information -->
-        <div class="card mt-4">
-            <div class="card-header bg-warning">
-                <h5 class="mb-0"><i class="fas fa-money-bill-wave"></i> FEES STRUCTURE FOR NEXT TERM</h5>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead class="table-light">
+            <section class="p-6 pt-0">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left border border-border-light dark:border-border-dark">
+                        <thead class="bg-gray-700 text-white font-semibold">
                             <tr>
-                                <th>ITEM</th>
-                                <th>AMOUNT (MK)</th>
+                                <th class="p-3" scope="col">SUBJECT</th>
+                                <th class="p-3 text-center" scope="col">MARKS %</th>
+                                <th class="p-3 text-center" scope="col">GRADES</th>
+                                <th class="p-3 text-center" scope="col">POSITION</th>
+                                <th class="p-3" scope="col">REMARKS</th>
+                                <th class="p-3" scope="col">SIGN</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>DAY SCHOLAR</td>
-                                <td>MK150,000.00</td>
+                        <tbody class="text-text-light-primary dark:text-text-dark-primary">
+                            <% 
+                            // Define all subjects in the order they should appear
+                            const subjectOrder = [
+                                'AGRICULTURE',
+                                'BIBLE KNOWLEDGE',
+                                'BIOLOGY',
+                                'CHICHEWA',
+                                'COMPUTER STUDIES',
+                                'ENGLISH',
+                                'FRENCH',
+                                'GEOGRAPHY',
+                                'MATHEMATICS',
+                                'CHEMISTRY',
+                                'PHYSICS',
+                                'SOCIAL AND LIFE'
+                            ];
+                            
+                            let rowClass = '';
+                            for (let i = 0; i < subjectOrder.length; i++) {
+                                const subjectName = subjectOrder[i];
+                                rowClass = i % 2 === 0 ? '' : 'bg-background-light dark:bg-background-dark';
+                                const subjectData = subjects.find(s => s.subject_name === subjectName);
+                            %>
+                            <tr class="border-b border-border-light dark:border-border-dark <%= rowClass %>">
+                                <td class=" font-medium"><%= subjectName %></td>
+                                <td class="text-center <%= getGradeClass(subjectData ? subjectData.grade : '') %>">
+                                    <%= subjectData && subjectData.marks ? subjectData.marks : '' %>
+                                </td>
+                                <td class="text-center <%= getGradeClass(subjectData ? subjectData.grade : '') %>">
+                                    <%= subjectData && subjectData.grade ? subjectData.grade : '' %>
+                                </td>
+                                <td class=" text-center">
+                                    <%= subjectData && subjectData.position ? subjectData.position : '' %>
+                                </td>
+                                <td class="">
+                                    <%= getRemarks(subjectData ? subjectData.grade : '') %>
+                                </td>
+                                <td class=""></td>
                             </tr>
-                            <tr>
-                                <td>SCHOOL UNIFORM</td>
-                                <td>MK110,000.00</td>
-                            </tr>
-                            <tr class="table-success">
-                                <td><strong>TOTAL</strong></td>
-                                <td><strong>MK260,000.00</strong></td>
-                            </tr>
+                            <% } %>
+                            
+                            
                         </tbody>
                     </table>
                 </div>
-                <div class="mt-3">
-                    <strong>Next term opens on:</strong> _________________________
-                </div>
-            </div>
-        </div>
+            </section>
 
-        <!-- Footer -->
-        <div class="text-center mt-4 text-muted">
-            <p>This is a computer generated report. Printed on: <%= new Date().toLocaleDateString() %></p>
-        </div>
+            <section class="px-1 pb-1">
+                <div class="bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300 p-1 rounded-lg text-sm flex flex-wrap justify-center items-center gap-x-4 gap-y-2">
+                    <span class="font-bold">JCE:</span>
+                    <span>A=(80-100)</span>
+                    <span>B=(70-79)</span>
+                    <span>C=(55-69)</span>
+                    <span>D=(40-54)</span>
+                    <span>F=(00-39)</span>
+                </div>
+            </section>
+
+            <section class="p-1 text-sm space-y-2 text-text-light-primary dark:text-text-dark-primary">
+                <div>
+                    <label class="font-semibold text-text-light-secondary dark:text-text-dark-secondary">Form Teacher Remarks:</label>
+                    <div class="mt-1 min-h-2 p-2 border border-border-light dark:border-border-dark rounded bg-background-light dark:bg-background-dark">
+                        <%- formTeacherRemarks %>
+                    </div>
+                </div>
+                <div>
+                    <label class="font-semibold text-text-light-secondary dark:text-text-dark-secondary">Signature:</label>
+                    <div class="mt-1 h-2 border-b border-border-light dark:border-border-dark"></div>
+                </div>
+                <div>
+                    <label class="font-semibold text-text-light-secondary dark:text-text-dark-secondary">Principal's remarks:</label>
+                    <div class="mt-1 min-h-2 p-1 border border-border-light dark:border-border-dark rounded bg-background-light dark:bg-background-dark">
+                        <%- principalRemarks %>
+                    </div>
+                </div>
+                <div>
+                    <label class="font-semibold text-text-light-secondary dark:text-text-dark-secondary">Signature:</label>
+                   
+                </div>
+            </section>
+
+            <footer class="p-2 border-t border-border-light dark:border-border-dark">
+                <div class="flex flex-col items-center">
+                    <h3 class="text-base font-bold mb-1 text-primary tracking-wide">FEES STRUCTURE FOR NEXT TERM</h3>
+                    <table class="w-full max-w-sm text-sm border-collapse border border-border-light dark:border-border-dark">
+                        <tbody>
+                            <tr class="text-text-light-primary dark:text-text-dark-primary">
+                                <td class="p-1 border border-border-light dark:border-border-dark font-medium">DAY SCHOLAR</td>
+                                <td class="p-1 border border-border-light dark:border-border-dark text-right">MK150,000.00</td>
+                            </tr>
+                            <tr class="text-text-light-primary dark:text-text-dark-primary bg-background-light dark:bg-background-dark">
+                                <td class="p-1 border border-border-light dark:border-border-dark font-medium">SCHOOL UNIFORM</td>
+                                <td class="p-1 border border-border-light dark:border-border-dark text-right">MK110,000.00</td>
+                            </tr>
+                            <tr class="text-text-light-primary dark:text-text-dark-primary bg-green-100 dark:bg-green-900">
+                                <td class="p-1 border border-border-light dark:border-border-dark font-bold">TOTAL</td>
+                                <td class="p-1 border border-border-light dark:border-border-dark text-right font-bold">MK260,000.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="text-sm mt-2 text-text-light-secondary dark:text-text-dark-secondary">
+                        Next term opens on: _________________________
+                    </p>
+                    
+                </div>
+            </footer>
+        </main>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Helper functions
+        // Helper functions for template
         function getRemarks(grade) {
+            if (!grade) return '';
             const remarks = {
                 'A': 'Excellent',
                 'B': 'Very Good', 
@@ -382,10 +253,11 @@
                 'D': 'Satisfactory',
                 'F': 'Needs Improvement'
             };
-            return remarks[grade] || 'N/A';
+            return remarks[grade] || '';
         }
 
         function getOverallRemarks(grade) {
+            if (!grade) return '';
             const overallRemarks = {
                 'A': 'Outstanding Performance',
                 'B': 'Very Good Performance',
@@ -393,49 +265,20 @@
                 'D': 'Average Performance',
                 'F': 'Needs Significant Improvement'
             };
-            return overallRemarks[grade] || 'N/A';
+            return overallRemarks[grade] || '';
         }
 
         function getGradeClass(grade) {
             if (!grade) return '';
             switch(grade) {
-                case 'A': return 'A';
-                case 'B': return 'B';
-                case 'C': return 'C';
-                case 'D': return 'D';
-                case 'F': return 'F';
+                case 'A': return 'grade-A';
+                case 'B': return 'grade-B';
+                case 'C': return 'grade-C';
+                case 'D': return 'grade-D';
+                case 'F': return 'grade-F';
                 default: return '';
             }
         }
-
-        // Print styles
-        window.addEventListener('DOMContentLoaded', (event) => {
-            const style = document.createElement('style');
-            style.innerHTML = `
-                @media print {
-                    body * {
-                        visibility: hidden;
-                    }
-                    .report-container, .report-container * {
-                        visibility: visible;
-                    }
-                    .report-container {
-                        position: absolute;
-                        left: 0;
-                        top: 0;
-                        width: 100%;
-                        box-shadow: none;
-                    }
-                    .print-button {
-                        display: none !important;
-                    }
-                    .watermark {
-                        opacity: 0.1;
-                    }
-                }
-            `;
-            document.head.appendChild(style);
-        });
     </script>
 </body>
 </html>
