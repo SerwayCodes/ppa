@@ -11,9 +11,9 @@
           <div class="page-header">
             <div class="row align-items-center">
               <div class="col">
-                <h3 class="page-title">Lecturers</h3>
+                <h3 class="page-title">Teachers</h3>
                 <ul class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="index">Lecturers</a></li>
+                  <li class="breadcrumb-item"><a href="index">Teachers</a></li>
                   <li class="breadcrumb-item active"></li>
                 </ul>
               </div>
@@ -21,10 +21,10 @@
           </div>
 
           <% if(messages.success) { %>
-            <div class="alert alert-success"><%= messages.success %></div>
-            <% } %> <% if(messages.error) { %>
-            <div class="alert alert-danger"><%= messages.error %></div>
-            <% } %>
+          <div class="alert alert-success"><%= messages.success %></div>
+          <% } %> <% if(messages.error) { %>
+          <div class="alert alert-danger"><%= messages.error %></div>
+          <% } %>
 
           <div class="row">
             <div class="col-sm-12">
@@ -39,11 +39,10 @@
                       required
                     >
                       <option value="">Select Class</option>
-                      <option value="E1">E1</option>
-                      <option value="E2">E2</option>
-                      <option value="E3">E3</option>
-                      <option value="E4">E4</option>
-                      <option value="E4M">E4M</option>
+                      <option value="1">Form 1</option>
+                      <option value="2">Form 2</option>
+                      <option value="3">Form 3</option>
+                      <option value="4">Form 4</option>
                     </select>
                   </div>
                   <div class="col-lg-6 mb-3">
@@ -54,17 +53,18 @@
                       class="form-control"
                       required
                     >
-                      <option value="">Select Module</option>
+                      <option value="">Select Subject</option>
                     </select>
                   </div>
 
-                  <div class="col-lg-6">
-                    <label for="selectedModule"><h4>Select Lecturer:</h4></label> <br>
-                    <select class="form-control" name="lecturer_id" required>
-                      <option value="">--Select a Lecturer--</option>
-                      <% lecturers.forEach(function(lecturer) { %>
-                      <option value="<%=lecturer.lecturer_id%>">
-                        <%= lecturer.first_name %> <%= lecturer.last_name %>
+                  <div class="col-lg-6 mb-3">
+                    <label for="selectedModule"><h4>Select Teacher:</h4></label>
+                    <br />
+                    <select class="form-control" name="teacher_id" required>
+                      <option value="">--Select a Teacher--</option>
+                      <% teachers.forEach(function(teacher) { %>
+                      <option value="<%=teacher.teacher_id%>">
+                        <%= teacher.first_name %> <%= teacher.last_name %>
                       </option>
                       <% }); %>
                     </select>

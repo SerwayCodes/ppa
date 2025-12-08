@@ -37,10 +37,10 @@ const get_admin_details = async (user_id) => {
 // Function to fetch counts
 async function fetchCounts() {
   try {
-    // Fetch total lecturers count
-    const lecturersQuery = "SELECT COUNT(*) FROM teachers";
-    const lecturersResult = await pool.query(lecturersQuery);
-    const totalLecturers = lecturersResult.rows[0].count;
+    // Fetch total teachers count
+    const teachersQuery = "SELECT COUNT(*) FROM teachers";
+    const teachersResult = await pool.query(teachersQuery);
+    const totalTeachers = teachersResult.rows[0].count;
 
     // Fetch total current students count
     const studentsQuery = "SELECT COUNT(*) FROM students";
@@ -50,7 +50,7 @@ async function fetchCounts() {
 
 
     return {
-      totalLecturers,
+      totalTeachers,
       totalCurrentStudents,
      
     };
@@ -537,8 +537,6 @@ admin_router.get("/addStudent_results", checkAuthMode, async (req, res) => {
   }
 });
 
-
-
 admin_router.get("/exams", checkAuthMode, async (req, res) => {
   const getAdmin = await get_admin_details(req.user.user_id);
   res.render("administrators/exams", {
@@ -548,7 +546,6 @@ admin_router.get("/exams", checkAuthMode, async (req, res) => {
 });
 
 //printinting individual student report
-
 
 admin_router.post('/print-individual-report', async (req, res) => {
     try {
@@ -792,7 +789,7 @@ admin_router.post("/not-rem-exam", checkAuthMode, async (req, res) => {
 //admin classes routes
 //-------------------------------------------------------------------------------------
 
-//CLASS GETT ROUTES
+//CLASS GET ROUTES
 
 admin_router.get("/class_list", checkAuthMode, async (req, res) => {
   try {
@@ -874,29 +871,32 @@ admin_router.get("/students_class", checkAuthMode, async (req, res) => {
 
 //==================================================================================================
 
-//admin lecturer router
+//admin teacher router
 //==================================================================================================
 
-//accessing lecturers list page
-admin_router.get("/lecturer", checkAuthMode, async (req, res) => {
+
+
+
+
+//accessing teachers list page
+admin_router.get("/teacher", checkAuthMode, async (req, res) => {
   try {
     const getAdmin = await get_admin_details(req.user.user_id);
 
-    // Query to fetch lecturers along with the count of modules assigned to each lecturer
     const result = await pool.query(`
-      SELECT lecturers.*, 
+      SELECT teachers.*, 
              (SELECT COUNT(*) 
-              FROM lecturer_course 
-              WHERE lecturer_course.lecturer_id = lecturers.lecturer_id) as module_count
-      FROM lecturers
+              FROM teacher_subject ts
+              WHERE ts.teacher_id = teachers.teacher_id) AS subject_count
+      FROM teachers
     `);
 
-    const lecturers = result.rows;
+    const teachers = result.rows;
 
-    res.render("administrators/lecturer", {
+    res.render("administrators/teacher", {
       user_role: req.user.user_role,
       user: getAdmin.first_name,
-      lecturers,
+      teachers,
     });
   } catch (error) {
     console.error(error);
@@ -904,88 +904,96 @@ admin_router.get("/lecturer", checkAuthMode, async (req, res) => {
   }
 });
 
-// accessing the add lecturer page
-admin_router.get("/add_lecturer", checkAuthMode, async (req, res) => {
+
+
+
+
+
+// accessing the add teacher page
+admin_router.get("/add_teacher", checkAuthMode, async (req, res) => {
   const getAdmin = await get_admin_details(req.user.user_id);
-  res.render("administrators/add_lecturer", {
+  res.render("administrators/add_teacher", {
     user_role: req.user.user_role,
     user: getAdmin.first_name,
   });
 });
 
-//ADDING A LECTURER INTO THE SYSTEM
-admin_router.post("/add_lecturer", checkAuthMode, async (req, res) => {
+
+
+
+//ADDING A teacher INTO THE SYSTEM
+admin_router.post("/add_teacher", checkAuthMode, async (req, res) => {
   const getAdmin = await get_admin_details(req.user.user_id);
 
-  let { lecturer_id, email, last_name, first_name, password } = req.body;
+  let { teacher_id, email, last_name, first_name, password } = req.body;
 
   hashedPassword = await bcrypt.hash(password, 10);
 
   //data validation
-  if (!first_name || !last_name || !email || !lecturer_id || !password) {
+  if (!first_name || !last_name || !email || !teacher_id || !password) {
     req.flash("error", "Error: All fields are required.");
-    res.redirect("add_lecturer");
+    res.redirect("add_teacher");
   }
 
-  //assigning a lecturer role
-  const user_role = "Lecturer";
+  //assigning a teacher role
+  const user_role = "Teacher";
 
-  // Check if a lecturer with the provided email or user_id already exists
+  // Check if a teacher with the provided email or user_id already exists
   pool.query(
     "SELECT user_id, email FROM users WHERE user_id = $1 OR email = $2",
-    [lecturer_id, email],
+    [teacher_id, email],
     (checkError, checkResults) => {
       if (checkError) {
-        req.flash("error", "Error: Unable to add lecturer.");
-        res.redirect("add_lecturer");
+        req.flash("error", "Error: Unable to add teacher.");
+        res.redirect("add_teacher");
       } else if (checkResults.rows.length > 0) {
         // User with the given email or ID already exists
 
         req.flash(
           "error",
-          `User with ID ${lecturer_id} or email ${email} already exists.`
+          `User with ID ${teacher_id} or email ${email} already exists.`
         );
-        res.redirect("add_lecturer");
+        res.redirect("add_teacher");
       } else {
-        // Insert the new lecturer record if it doesn't already exist
+        // Insert the new teacher record if it doesn't already exist
         pool.query("BEGIN", (beginError) => {
           if (beginError) {
-            req.flash("error", "Error: Unable to add lecturer.");
-            return res.redirect("add_lecturer");
+            req.flash("error", "Error: Unable to add teacher.");
+            return res.redirect("add_teacher");
           }
 
           // Insert the new user record into the users table
           pool.query(
             "INSERT INTO users (user_id, email, password, user_role) VALUES ($1, $2, $3, $4) RETURNING user_id",
-            [lecturer_id, email, hashedPassword, user_role],
+            [teacher_id, email, hashedPassword, user_role],
             (insertUserError, insertUserResults) => {
               if (insertUserError) {
-                req.flash("error", "Error: Unable to add lecturer.");
+                req.flash("error", "Error: Unable to add teacher.");
                 return rollbackAndRender(res);
               }
 
-              // Insert the new lecturer record into the lecturers table
+              // Insert the new teacher record into the teachers table
               pool.query(
-                "INSERT INTO lecturers (first_name, last_name, user_id, lecturer_id) VALUES ($1, $2, $3, $4)",
-                [first_name, last_name, lecturer_id, lecturer_id],
-                (insertLecturerError, insertLecturerResults) => {
-                  if (insertLecturerError) {
-                    req.flash("error", "Error: Unable to add lecturer.");
+                "INSERT INTO teachers (first_name, last_name, user_id, teacher_id) VALUES ($1, $2, $3, $4)",
+                [first_name, last_name, teacher_id, teacher_id],
+                (insertteacherError, insertteacherResults) => {
+                  if (insertteacherError) {
+                    req.flash("error", "Error: Unable to add teacher.");
                     return rollbackAndRender(res);
                   }
 
                   // Commit the transaction if both inserts were successful
                   pool.query("COMMIT", (commitError) => {
                     if (commitError) {
-                      req.flash("error", "Error: Unable to add lecturer.");
+                      req.flash("error", "Error: Unable to add teacher.");
                       return rollbackAndRender(res);
                     }
 
                     req.flash(
                       "success",
-                      `Lecturer added with ID ${lecturer_id}`
+                      `teacher added with ID ${teacher_id}`
                     );
-                    res.redirect("add_lecturer");
+                    res.redirect("add_teacher");
                   });
                 }
               );
@@ -999,8 +1007,8 @@ admin_router.post("/add_lecturer", checkAuthMode, async (req, res) => {
             if (rollbackError) {
               console.error("Error rolling back transaction:", rollbackError);
             }
-            req.flash("error", "Error: Unable to add lecturer.");
-            res.redirect("add_lecturer");
+            req.flash("error", "Error: Unable to add teacher.");
+            res.redirect("add_teacher");
           });
         }
       }
@@ -1008,49 +1016,49 @@ admin_router.post("/add_lecturer", checkAuthMode, async (req, res) => {
   );
 });
 
-//accessing edit lecturer page
-admin_router.get("/lecturerDetails/:id", checkAuthMode, async (req, res) => {
+//accessing edit teacher page
+admin_router.get("/teacherDetails/:id", checkAuthMode, async (req, res) => {
   try {
-    const lecturerId = req.params.id; // Replace 'your_lecturer_id' with the actual lecturer ID you want to query
+    const teacherId = req.params.id; // Replace 'your_teacher_id' with the actual teacher ID you want to query
 
     const result = await pool.query(
       `
-      SELECT lecturers.first_name, lecturers.last_name, lecturer_course.subject_id, subjects.subject_name
-      FROM lecturers
-      INNER JOIN lecturer_course ON lecturers.lecturer_id = lecturer_course.lecturer_id
-      INNER JOIN subjects ON lecturer_course.subject_id = subjects.subject_id
-      WHERE lecturers.lecturer_id = $1
+      SELECT teachers.first_name, teachers.last_name, teacher_course.subject_id, subjects.subject_name
+      FROM teachers
+      INNER JOIN teacher_course ON teachers.teacher_id = teacher_course.teacher_id
+      INNER JOIN subjects ON teacher_course.subject_id = subjects.subject_id
+      WHERE teachers.teacher_id = $1
       `,
-      [lecturerId]
+      [teacherId]
     );
-    const lecturerCourses = result.rows;
+    const teacherCourses = result.rows;
 
     // Send the students data as a JSON response
-    res.json({ lecturerModules: lecturerCourses });
+    res.json({ teacherModules: teacherCourses });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
-admin_router.get("/module_assignment", checkAuthMode, async (req, res) => {
+admin_router.get("/subject_assignment", checkAuthMode, async (req, res) => {
   const getAdmin = await get_admin_details(req.user.user_id);
-  const getLecturer = await pool.query("SELECT * FROM lecturers");
-  const lecturers = getLecturer.rows;
+  const getteacher = await pool.query("SELECT * FROM teachers");
+  const teachers = getteacher.rows;
 
-  res.render("administrators/module_assignment", {
+  res.render("administrators/subject_assignment", {
     user_role: req.user.user_role,
     user: getAdmin.first_name,
-    lecturers,
+    teachers,
   });
 });
 
-admin_router.post("/assign_module", checkAuthMode, async (req, res) => {
-  const { selectedModule, lecturer_id } = req.body;
+admin_router.post("/assign_subject", checkAuthMode, async (req, res) => {
+  const { selectedModule, teacher_id } = req.body;
 
-  // Check if the selectedModule and lecturer_id combination already exists in lecturer_course table
+  // Check if the selectedModule and teacher_id combination already exists in teacher_course table
   const checkQuery = {
-    text: "SELECT * FROM lecturer_course WHERE subject_id = $1 ",
+    text: "SELECT * FROM teacher_course WHERE subject_id = $1 ",
     values: [selectedModule],
   };
 
@@ -1061,69 +1069,69 @@ admin_router.post("/assign_module", checkAuthMode, async (req, res) => {
       // The combination already exists, send an error message
       req.flash(
         "error",
-        "Error: This module is already assigned to the lecturer."
+        "Error: This module is already assigned to the teacher."
       );
-      // Inside the code where you handle form submission and redirect to the module_assignment route
-      res.redirect("module_assignment");
+      // Inside the code where you handle form submission and redirect to the subject_assignment route
+      res.redirect("subject_assignment");
     } else {
-      // The combination does not exist, insert it into the course_lecturer table
+      // The combination does not exist, insert it into the course_teacher table
       const insertQuery = {
-        text: "INSERT INTO lecturer_course (subject_id, lecturer_id) VALUES ($1, $2)",
-        values: [selectedModule, lecturer_id],
+        text: "INSERT INTO teacher_course (subject_id, teacher_id) VALUES ($1, $2)",
+        values: [selectedModule, teacher_id],
       };
 
       await pool.query(insertQuery);
-      req.flash("success", "Module assigned successfully.");
-      res.redirect("module_assignment");
+      req.flash("success", "Subject assigned successfully.");
+      res.redirect("subject_assignment");
     }
   } catch (error) {
     console.error(error);
     req.flash("error", "Error: Failed to assign module. Please try again.");
-    res.redirect("module_assignment");
+    res.redirect("subject_assignment");
   }
 });
 
 // Endpoint for handling module deletion
-admin_router.post("/deAssignModule", async (req, res) => {
-  const { lecturerId, courseId } = req.body;
+admin_router.post("/deAssignSubject", async (req, res) => {
+  const { teacherId, courseId } = req.body;
 
   try {
     await pool.query(
-      "DELETE FROM lecturer_course WHERE lecturer_id = $1 AND subject_id = $2",
-      [lecturerId, courseId]
+      "DELETE FROM teacher_course WHERE teacher_id = $1 AND subject_id = $2",
+      [teacherId, courseId]
     );
 
     const result = await pool.query(
       `
-      SELECT lecturers.first_name, lecturers.last_name, lecturer_course.subject_id, subjects.subject_name
-      FROM lecturers
-      INNER JOIN lecturer_course ON lecturers.lecturer_id = lecturer_course.lecturer_id
-      INNER JOIN subjects ON lecturer_course.subject_id = subjects.subject_id
-      WHERE lecturers.lecturer_id = $1
+      SELECT teachers.first_name, teachers.last_name, teacher_course.subject_id, subjects.subject_name
+      FROM teachers
+      INNER JOIN teacher_course ON teachers.teacher_id = teacher_course.teacher_id
+      INNER JOIN subjects ON teacher_course.subject_id = subjects.subject_id
+      WHERE teachers.teacher_id = $1
       `,
-      [lecturerId]
+      [teacherId]
     );
-    const lecturerCourses = result.rows;
+    const teacherCourses = result.rows;
     req.flash("success", "Module successfully deassigned");
-    res.json({ lecturerModules: lecturerCourses });
-    // Redirect to lecturer details page with a success message
+    res.json({ teacherModules: teacherCourses });
+    // Redirect to teacher details page with a success message
   } catch (error) {
     req.flash("error", "Module deassignment failed");
-    res.redirect(`lecturer_modules`);
+    res.redirect(`teacher_modules`);
   }
 });
 
-admin_router.get("/lecturer_modules", checkAuthMode, async (req, res) => {
+admin_router.get("/teacher_modules", checkAuthMode, async (req, res) => {
   try {
-    const lecturerId = req.query.lecturerId;
+    const teacherId = req.query.teacherId;
     const dataString = req.query.data;
     const data = JSON.parse(decodeURIComponent(dataString));
     const getAdmin = await get_admin_details(req.user.user_id);
-    res.render("administrators/lecturer_modules", {
+    res.render("administrators/teacher_modules", {
       user_role: req.user.user_role,
       user: getAdmin.first_name,
       data,
-      lecturerId,
+      teacherId,
     });
   } catch (error) {
     console.error(error);

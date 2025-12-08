@@ -11,12 +11,12 @@
           <div class="page-header">
             <div class="row align-items-center">
               <div class="col">
-                <h3 class="page-title">Lecturers</h3>
+                <h3 class="page-title">Teachers</h3>
                 <ul class="breadcrumb">
                   <li class="breadcrumb-item">
                     <a href="index.html">Dashboard</a>
                   </li>
-                  <li class="breadcrumb-item active">Lecturers</li>
+                  <li class="breadcrumb-item active">Teachers</li>
                 </ul>
               </div>
             </div>
@@ -45,19 +45,19 @@
                       </thead>
                       <tbody>
 
-                        <% lecturers.forEach(function(lecturer) { %>
+                        <% teachers.forEach(function(teacher) { %>
                           
                           
                         <tr>
-                          <td><%= lecturer.user_id %> </td>
-                          <td><%= lecturer.first_name %> </td>
-                          <td><%= lecturer.last_name %> </td>
-                          <td><%= lecturer.gender %> </td>
-                          <td class="text-center"><%= lecturer.module_count %> </td>
+                          <td><%= teacher.user_id %> </td>
+                          <td><%= teacher.first_name %> </td>
+                          <td><%= teacher.last_name %> </td>
+                          <td><%= teacher.gender %> </td>
+                          <td class="text-center"><%= teacher.subject_count %> </td>
 
-                          <td><%= lecturer.phone_number %> </td>
+                          <td><%= teacher.phone_number %> </td>
                           <td>
-                            <button class="btn btn-primary" onclick="getLecturerDetails('<%= lecturer.user_id %>')">View</button>
+                            <button class="btn btn-primary" onclick="getteacherDetails('<%= teacher.user_id %>')">View</button>
                           </td>
                           <td class="text-right">
                             <div class="actions">
@@ -87,13 +87,13 @@
     <script>
       // Function to handle button click
       // Function to handle button click
-      function getLecturerDetails(lecturerId) {
+      function getteacherDetails(teacherId) {
         
-        fetch(`lecturerDetails/${lecturerId}`)
+        fetch(`teacherDetails/${teacherId}`)
           .then((response) => response.json()) // Assuming the server responds with JSON data
           .then((data) => {
             // Redirect to another page and pass the data as a query parameter
-            window.location.href = `lecturer_modules?lecturerId=${lecturerId}&data=${encodeURIComponent(
+            window.location.href = `teacher_modules?teacherId=${teacherId}&data=${encodeURIComponent(
               JSON.stringify(data)
             )}`;
           })
