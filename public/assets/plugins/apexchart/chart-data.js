@@ -7,15 +7,15 @@ $(document).ready(function() {
 
             // Calculate the total count for each program (E1, E2, E3, E4)
             const totalCounts = {
-                'E1': 0,
-                'E2': 0,
-                'E3': 0,
-                'E4': 0
+                '1': 0,
+                '2': 0,
+                '3': 0,
+                '4': 0
             };
 
             data.forEach(student => {
-                if (student.is_current && ['E1', 'E2', 'E3', 'E4'].includes(student.allocated_program)) {
-                    totalCounts[student.allocated_program]++;
+                if (student.is_current && ['1', '2', '3', '4'].includes(student.form_level)) {
+                    totalCounts[student.form_level]++;
                 }
             });
 
@@ -23,12 +23,12 @@ $(document).ready(function() {
 
             // Update the series data for the chart
             var options = {
-                series: [totalCounts['E1'], totalCounts['E2'], totalCounts['E3'], totalCounts['E4']],
+                series: [totalCounts['1'], totalCounts['2'], totalCounts['3'], totalCounts['4']],
                 chart: {
                     width: 400,
                     type: 'pie',
                 },
-                labels: ['E1', 'E2', 'E3', 'E4'],
+                labels: ['Form 1', 'Form 2', 'Form 3', 'Form 4'],
                 responsive: [{
                     breakpoint: 480,
                     options: {

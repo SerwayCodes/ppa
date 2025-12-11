@@ -75,6 +75,7 @@ function checkAuthMode(req, res, next) {
 admin_router.get("/", checkAuthMode, async (req, res) => {
   const getAdmin = await get_admin_details(req.user.user_id);
   const counts = await fetchCounts();
+  console.log(counts)
 
   const result = await pool.query("Select * from calendar_events");
 
@@ -105,7 +106,7 @@ admin_router.get("/fetch_student_data", async (req, res) => {
   try {
     const programValues = ["1", "2", "3", "4"];
     const query = {
-      text: "SELECT * FROM students WHERE is_current = true AND form_level= ANY($1)",
+      text: "SELECT * FROM students WHERE form_level= ANY($1)",
       values: [programValues],
     };
     const { rows } = await pool.query(query);

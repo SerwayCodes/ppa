@@ -1,32 +1,32 @@
-function addMoreRows() {
-  const tableBody = document.querySelector(".table-input tbody");
+// function addMoreRows() {
+//   const tableBody = document.querySelector(".table-input tbody");
 
-  const newRow = document.createElement("tr");
-  newRow.innerHTML = `
-	  <th class="text-center pt-4" scope="row">${
-      tableBody.childElementCount + 1
-    }</th>
-	  <td><input class="form-control" type="text" placeholder="Enter Subject" /></td>
-	  <td><input class="form-control" type="text" placeholder="Enter Grade" /></td>
-	`;
+//   const newRow = document.createElement("tr");
+//   newRow.innerHTML = `
+// 	  <th class="text-center pt-4" scope="row">${
+//       tableBody.childElementCount + 1
+//     }</th>
+// 	  <td><input class="form-control" type="text" placeholder="Enter Subject" /></td>
+// 	  <td><input class="form-control" type="text" placeholder="Enter Grade" /></td>
+// 	`;
 
-  tableBody.appendChild(newRow);
-}
-function addMoreRows2() {
-  const tableBody = document.querySelector(".table-input2 tbody");
+//   tableBody.appendChild(newRow);
+// }
+// function addMoreRows2() {
+//   const tableBody = document.querySelector(".table-input2 tbody");
 
-  const newRow = document.createElement("tr");
-  newRow.innerHTML = `
-  <th class="text-center pt-4" scope="row">${
-    tableBody.childElementCount + 1
-  }</th>
-	<td><input class="form-control" type="text" placeholder="Name of Institution" /></td>
-	<td><input class="form-control" type="text" placeholder="Enter Grade" /></td>
-	<td><input class="form-control" type="text" placeholder="Enter Year" /></td>
-`;
+//   const newRow = document.createElement("tr");
+//   newRow.innerHTML = `
+//   <th class="text-center pt-4" scope="row">${
+//     tableBody.childElementCount + 1
+//   }</th>
+// 	<td><input class="form-control" type="text" placeholder="Name of Institution" /></td>
+// 	<td><input class="form-control" type="text" placeholder="Enter Grade" /></td>
+// 	<td><input class="form-control" type="text" placeholder="Enter Year" /></td>
+// `;
 
-  tableBody.appendChild(newRow);
-}
+//   tableBody.appendChild(newRow);
+// }
 
 (function ($) {
   "use strict";
