@@ -1,0 +1,101 @@
+Project Breakdown: School Management System
+Phase 1: Project Planning & Architecture (Week 1)
+Goal: Set up foundation and planning
+Tasks:
+	1.	Requirements Finalization (2 days)
+	Confirm all user roles (Admin, Teacher, Student)
+	Define exact features for each role
+	Finalize report formats and printing requirements 
+
+//COMMENT
+All users are difined user roles currently we are priotising the admin and teachers
+the admin can add and remove user 
+
+
+	2. 	Database Schema Design (2 days)
+
+		Finalize all tables (you have good start)
+		Add missing tables: attendance, fees payments, notifications
+		Define all relationships and constraints
+
+//COMMENT 
+So far the tables have been added but their is a need for trimming some unnecessary student details as it was intially designed for college student
+attendance, fees payment and notification tables added
+realationship constraints are yet to be clarified
+
+
+	3.	Project Structure Setup (1 day)
+o	Create organized folder structure
+o	Set up version control (Git)
+o	Configure development environment
+Phase 2: Core System Development (Weeks 2-3)
+Goal: Build foundational modules
+Tasks:
+1.	User Authentication & Authorization (3 days)
+o	Login/Logout system
+o	Role-based access control
+o	Password reset functionality
+o	Session management
+2.	Admin Dashboard (4 days)
+o	Student registration module
+o	Teacher registration module
+o	Class/Form management
+o	Subject allocation
+o	User management
+3.	Student Management Module (3 days)
+o	Student profile management
+o	Class assignment
+o	Student search/filter
+o	Bulk operations
+Phase 3: Academic Modules (Weeks 4-5)
+Goal: Implement core academic features
+Tasks:
+1.	Teacher Portal (4 days)
+o	Dashboard for teachers
+o	Class/subject assignment
+o	Student list viewing
+o	Basic profile management
+2.	Exam Results Management (5 days)
+o	Midterm results entry interface
+o	End-of-term results entry
+o	Results validation
+o	Automatic grade calculation
+o	Class ranking system
+3.	Report Generation System (4 days)
+o	Individual student reports
+o	Class ranking reports
+o	Term progress reports
+o	Print functionality (HTML/PDF)
+Phase 4: Advanced Features (Week 6)
+Goal: Add value-added features
+Tasks:
+1.	Attendance Tracking (3 days)
+o	Daily attendance marking
+o	Attendance reports
+o	Absence notifications
+2.	Fees Management (3 days)
+o	Fees structure setup
+o	Payment recording
+o	Balance tracking
+o	Payment receipts
+3.	Communication Module (2 days)
+o	Announcements system
+o	Notifications
+o	Basic messaging
+Phase 5: Testing & Deployment (Week 7)
+Goal: Ensure stability and go live
+Tasks:
+1.	System Testing (3 days)
+o	Unit testing
+o	Integration testing
+o	User acceptance testing
+o	Security testing
+2.	Performance Optimization (2 days)
+o	Database optimization
+o	Code optimization
+o	Caching implementation
+3.	Deployment & Documentation (2 days)
+o	Server setup
+o	Deployment
+o	User documentation
+o	Admin manual
