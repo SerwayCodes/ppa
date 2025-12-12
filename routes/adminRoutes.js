@@ -75,7 +75,7 @@ function checkAuthMode(req, res, next) {
 admin_router.get("/", checkAuthMode, async (req, res) => {
   const getAdmin = await get_admin_details(req.user.user_id);
   const counts = await fetchCounts();
-  console.log(counts)
+
 
   const result = await pool.query("Select * from calendar_events");
 
@@ -418,7 +418,7 @@ admin_router.get("/student_profile", checkAuthMode, async (req, res) => {
 
     const getAdmin = await get_admin_details(req.user.user_id);
 
-    console.log(data);
+   
     res.render("administrators/student_profile", {
       user_role: req.user.user_role,
       user: getAdmin.first_name,
@@ -552,7 +552,7 @@ admin_router.post('/print-individual-report', async (req, res) => {
     try {
         const { studentId, examType, termNumber, academicYear } = req.body;
         
-        console.log('Received request:', { studentId, examType, termNumber, academicYear });
+       
         
         // Validate input
         if (!studentId || !examType || !termNumber || !academicYear) {
@@ -597,7 +597,7 @@ admin_router.post('/print-individual-report', async (req, res) => {
         }
         
         const reportData = reportResult.rows[0];
-        console.log('Report data retrieved for student:', reportData.student_id);
+       
         
         // Ensure we have all required subjects for the form level
         const requiredSubjectsQuery = `
@@ -621,7 +621,7 @@ admin_router.post('/print-individual-report', async (req, res) => {
             };
         });
 
-        console.log('Processed subjects:', allSubjects.length);
+        
 
         // Helper functions for remarks
         const generateFormTeacherRemarks = (averageMarks) => {
@@ -717,7 +717,7 @@ admin_router.post('/print-individual-report', async (req, res) => {
 
         // Get the absolute path to the HTML template
         const templatePath = path.join(__dirname, '../views/reports/individual-report-html.ejs');
-        console.log('Template path:', templatePath);
+       
         
         // Check if template exists
         const fs = require('fs');
@@ -727,7 +727,7 @@ admin_router.post('/print-individual-report', async (req, res) => {
 
         // Render the HTML report
         const html = await ejs.renderFile(templatePath, templateData);
-        console.log('HTML report generated successfully');
+       
         
         // Send HTML response
         res.setHeader('Content-Type', 'text/html');
@@ -1148,14 +1148,14 @@ admin_router.get("/teacher_modules", checkAuthMode, async (req, res) => {
 //admin modules list
 //-------------------------------------------------------------------------------------
 
-admin_router.get("/module_list", checkAuthMode, async (req, res) => {
+admin_router.get("/subject_list", checkAuthMode, async (req, res) => {
   const getAdmin = await get_admin_details(req.user.user_id);
 
   try {
     const modules = (await pool.query("SELECT * FROM subjects")).rows;
 
     // Pass the data to the template for rendering
-    res.render("administrators/module_list", {
+    res.render("administrators/subject_list", {
       user_role: req.user.user_role,
       user: getAdmin.first_name,
       modules: modules,
